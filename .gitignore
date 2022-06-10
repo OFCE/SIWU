@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.Ruserdata
+*.rda
+*.RData
+*.svg
+*.rdata
+data/*
+doc/nul
