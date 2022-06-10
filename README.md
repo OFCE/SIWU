@@ -56,6 +56,6 @@ Once all dependencies are installed, data should be updated automatically when a
 
 Sources are moderately commented and comments are usually in french.
 
-## licence
+## license
 
-All code, texts and graph are under CECILL-B licence (a french licence in the spirit of MIT licence). data is from open data from providers and subject to specific licence.
+All code, texts and graph are under a [CECILL-B license](LICENSE.TXT) (a french licence in the spirit of MIT licence). Data is from (what we believe is) open data from various providers and may be subject to specific licenses.
