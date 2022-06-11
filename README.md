@@ -38,7 +38,7 @@ Using World Bank commodity prices we build a real price index starting in 1960 f
 
 ## report
 
-A report is presenting data and analysis. It is located in the `doc` folder. The source for report is in `SIWU_brief.qmd` and relies on `{quarto}`. A pdf can be rendered ([doc/SIWU_brief.pdf](doc/SIWU_brief.pdf)) or an HTML accessible there: [doc/SIWU_brief.html](doc/SIWU_brief.html)
+A report is presenting data and analysis. It is located in the `report` folder. The source for report is in `SIWU_brief.qmd` and relies on `{quarto}`. A pdf can be rendered ([doc/SIWU_brief.pdf](doc/SIWU_brief.pdf)) or an HTML accessible there: [doc/SIWU_brief.html](doc/SIWU_brief.html)
 
 ## structure of files and folders
 

@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+  - ../report/SIWU_brief.qmd
+
+website:
+  title: "mysite"
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+
+
