@@ -31,6 +31,11 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r datainit, echo=FALSE}
+objects <- load("../data/sorties.rdata")
+
+```
+
 # Social Impact of War in Ukraine brief
 
 The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
