@@ -15,12 +15,13 @@ format:
     number-sections: true
     number-depth: 1
     documentclass: scrartcl
-    papersize: a4
-    fontfamily: Nunito
-    fontsize: 9pt
     mainfont: Nunito
+    papersize: a4
+    fontsize: 9pt
     fig-cap-location: top
     include-in-header: 'preamble.tex'
+    reference-location: margin
+    citation-location: margin
 editor_options: 
     markdown: 
       wrap: 100
@@ -192,11 +193,13 @@ energy for housing (heating, hot water or appliances), in the categories CP0451 
 a sharp increase (especially oils and fat). Tables in the annex are summarizing the most important
 increases.
 
-![Price increase since War in Ukraine (1/3)](../svg/depuis_wiu_1.png){.graph width="16cm"}
+![Price increase since War in Ukraine (1/3)](../svg/depuis_wiu_1.png){.graph width="13.5cm"}
 
 ![Price increase since War in Ukraine (2/3)](../svg/depuis_wiu_2.png){.graph width="16cm"}
 
 ![Price increase since War in Ukraine (3/3)](../svg/depuis_wiu_3.png){.graph width="16cm"}
+
+\FloatBarrier
 
 The following 3 graphs are displaying the breakdown by quintile of the impact in purchasing power
 per countries.
@@ -206,6 +209,8 @@ per countries.
 ![Impact on income per quintile (2/3)](../svg/coicop_l1_wiu_2.png){.graph width="16cm"}
 
 ![Impact on income per quintile (3/3)](../svg/coicop_l1_wiu_3.png){.graph width="16cm"}
+
+\FloatBarrier
 
 Compared to other countries, and due to governmental policies, households in France are relatively
 preserved by price increases. This is also the case in Sweden, Cyprus and Malta, three countries
@@ -237,53 +242,54 @@ from energy and food price volatility.
 
 ![Impact on quintile](../svg/quantiles1et5.png){.graph width="16cm"}
 
-> **What impact on poverty rates in the European Union (according to Eurostat) ?**
+::: {.callout-note appearance="minimal" icon="false"}
+## What impact on poverty rates (according to Eurostat) ?
 
-> In the European Union, monetary poverty is defined as belonging to a Household whose living
-> standard (in euros or national currency) is below 60% of the median (national) living standard.
-> The indicator is said to be relative: it depends on the relative position of a Household in the
-> entire living standard distribution. One advantage of this indicator is its simplicity: one only
-> needs to know the disposable income (after tax and social transfers) of a representative sample of
-> households (EU-SILC). Due to controversies around this monetary indicator, Eurostat names this
-> indicator "at risk of poverty rate".
+In the European Union, monetary poverty is defined as belonging to a Household whose living standard
+(in euros or national currency) is below 60% of the median (national) living standard. The indicator
+is said to be relative: it depends on the relative position of a Household in the entire living
+standard distribution. One advantage of this indicator is its simplicity: one only needs to know the
+disposable income (after tax and social transfers) of a representative sample of households
+(EU-SILC). Due to controversies around this monetary indicator, Eurostat names this indicator "at
+risk of poverty rate".
 
-> The analysis presented here could deepen the controversy around the monetary indicator. Since the
-> indicator only looks at income, it does not take into account differential inflation for poorer
-> and richer households. If poor and rich households have different consumption baskets (poorer
-> households consume relatively more transport, heating, and food), asymmetric inflation as we have
-> seen following the Ukrainian invasion (which affected heating, transport and food
-> disproportionally) will have different impact on the real living standard of poor and rich
-> households, even if income levels are stable. This impact will not be shown in the indicator.
-> Also, equivalent policies could have different impacts on the monetary poverty rate: a social
-> tariff will generally not be reflected in the poverty rate, while a social cheque will lower the
-> poverty rate. Therefore, there could be a paradoxical decrease in the at-risk-of-poverty rate in
-> 2021/2022 if differential increases in prices are not reflected in the indicator, but social
-> cheques are (since they are included in income.
+The analysis presented here could deepen the controversy around the monetary indicator. Since the
+indicator only looks at income, it does not take into account differential inflation for poorer and
+richer households. If poor and rich households have different consumption baskets (poorer households
+consume relatively more transport, heating, and food), asymmetric inflation as we have seen
+following the Ukrainian invasion (which affected heating, transport and food disproportionally) will
+have different impact on the real living standard of poor and rich households, even if income levels
+are stable. This impact will not be shown in the indicator. Also, equivalent policies could have
+different impacts on the monetary poverty rate: a social tariff will generally not be reflected in
+the poverty rate, while a social cheque will lower the poverty rate. Therefore, there could be a
+paradoxical decrease in the at-risk-of-poverty rate in 2021/2022 if differential increases in prices
+are not reflected in the indicator, but social cheques are (since they are included in income.
 
-> This is a well-known limit of this indicator which only reflects income, and not needs. To respond
-> to this limitation, Eurostat added a second indicator, using Material and Social Deprivation
-> approach. In this latter approach, which is gaining weight, a person is in deprivation if he/she
-> declares that he/she does not have sufficient financial resources to access a certain number of
-> goods and services, considered necessary for decent living conditions in Europe (from 'being
-> unable to keep one's home adequately warm', to 'afford an internet connection' or 'a car for
-> personal use', and 'a meal with protein a day'). Persons who are incapable of covering expense to
-> at least five of the thirteen items are considered deprived. Today, if you Google "poverty rate in
-> the European Union", chances are that you will click on a study that uses a third indicator: "at
-> risk of poverty and social exclusion", which is quietly becoming the main indicator of poverty in
-> the European Union. Are poor according to this indicator, individuals who are poor according to
-> either one of the two indicators (monetary or deprivation). This represents around 22% of the EU
-> population (35% in Romania, 12% in Czechia). The advantage of this indicator is that it is likely
-> to go up when prices increases, and the living standard of the poor decreases). It also has an
-> absolute component: if all income go down, deprivation goes up and poverty also goes up, which is
-> in line with a certain common sense / intuition (poverty usually has both an absolute and relative
-> component in its common acceptation).
+This is a well-known limit of this indicator which only reflects income, and not needs. To respond
+to this limitation, Eurostat added a second indicator, using Material and Social Deprivation
+approach. In this latter approach, which is gaining weight, a person is in deprivation if he/she
+declares that he/she does not have sufficient financial resources to access a certain number of
+goods and services, considered necessary for decent living conditions in Europe (from 'being unable
+to keep one's home adequately warm', to 'afford an internet connection' or 'a car for personal use',
+and 'a meal with protein a day'). Persons who are incapable of covering expense to at least five of
+the thirteen items are considered deprived. Today, if you Google "poverty rate in the European
+Union", chances are that you will click on a study that uses a third indicator: "at risk of poverty
+and social exclusion", which is quietly becoming the main indicator of poverty in the European
+Union. Are poor according to this indicator, individuals who are poor according to either one of the
+two indicators (monetary or deprivation). This represents around 22% of the EU population (35% in
+Romania, 12% in Czechia). The advantage of this indicator is that it is likely to go up when prices
+increases, and the living standard of the poor decreases). It also has an absolute component: if all
+income go down, deprivation goes up and poverty also goes up, which is in line with a certain common
+sense / intuition (poverty usually has both an absolute and relative component in its common
+acceptation).
 
-> There are other problems: deprivation can only be measured through a survey and is therefore not
-> as predictable as income (it is easier for a forecaster to predict income than how people will
-> answer a survey). Also, the way people answer surveys might differ across countries and time (for
-> the same budget and prices): it is a subjective measure. Also, being able to afford a personal car
-> might seen pertinent today but not in 20 years. This poses problems when the list of deprivation
-> items needs to be updated.
+There are other problems: deprivation can only be measured through a survey and is therefore not as
+predictable as income (it is easier for a forecaster to predict income than how people will answer a
+survey). Also, the way people answer surveys might differ across countries and time (for the same
+budget and prices): it is a subjective measure. Also, being able to afford a personal car might seen
+pertinent today but not in 20 years. This poses problems when the list of deprivation items needs to
+be updated.
+:::
 
 # Results: discussion by country
 

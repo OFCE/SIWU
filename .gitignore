@@ -5,6 +5,4 @@
 *.RData
 *.svg
 *.rdata
-data/*
-doc/nul
 nul
