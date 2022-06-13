@@ -46,6 +46,7 @@ sysfonts::font_add_google('Nunito')
 
 showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
+options(ofce.background_color = "#F9F4ED")
 
 ```
 
