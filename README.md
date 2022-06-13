@@ -42,6 +42,8 @@ A report is presenting data and analysis. It is located in the `report` folder. 
 
 ## structure of files and folders
 
+R sources files are in the `R` folder.
+
 `make ISGU data.r` download data from eurostat using some convenience function around the `{eurostat}` package. Install `{ofce}` from github (`devtools::install_github("ofce/ofce")`) and proceed to transformation of data. data is cached in `data` but is not on the github repo, so you need to run sources files to download everything. Results are on the repo.
 
 A check is done each time you run `make ISGU data.r`, to assess if there is an update of Eurostat data and download the latest version of data. No history or versionning of datasets from Eurostat is kept.
