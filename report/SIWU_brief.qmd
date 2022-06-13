@@ -43,6 +43,7 @@ library(ggh4x)
 library(ofce)
 library(showtext)
 sysfonts::font_add_google('Nunito')
+
 showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
 
@@ -131,7 +132,7 @@ differences.
 [^2]: Odyssee-Mure:
     <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
 
-```{r, commodities, fig.height= 6a, fig.width = 6, echo=FALSE}
+```{r, commodities, fig.height= 6, fig.width = 6, echo=FALSE}
 #| label: fig-main-margin-cap
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
