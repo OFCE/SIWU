@@ -20,6 +20,7 @@ format:
     fontsize: 9pt
     fig-cap-location: top
     include-in-header: 'preamble.tex'
+    extra_dependencies: ["float"]
 editor_options: 
     markdown: 
       wrap: 100
@@ -29,7 +30,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r datainit, echo=FALSE}
+```{r datainit, echo=FALSE, include=FALSE}
 library(tidyverse)
 library(lubridate)
 library(glue)
@@ -37,7 +38,7 @@ library(ggh4x)
 library(ofce)
 library(showtext)
 sysfonts::font_add_google('Nunito')
-showtext::showtext.auto()
+showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
 
 ```
@@ -108,7 +109,9 @@ exposures to energy price increases, depending on nationality, income, mode of t
 domestic heating. Households represent a quarter (26%) of final energy consumption. National
 exposures of households to energy prices differ greatly. If we look at energy consumption in housing
 by households, at the EU level, space heating represents according to Eurostat (2019) 63% of
-consumption; and 32% of energy consumption is provided by gas. However, gas is not used in small
+consumption; and 32% of energy consumption is provided by gas.
+
+However, gas is not used in small
 islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%) and Finland (0,5%), who use mostly
 derived heat and electricity (see Table). On the other hand, gas represents the majority of energy
 in housing in the Netherlands (69,3%) and Italy (51,8%). Although, the need of energy might differ
@@ -122,7 +125,7 @@ of these differences can be attributed to income differences.
 [^2]: Odyssee-Mure:
     <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
 
-```{r, commodities, fig.height= 8, echo=FALSE}
+```{r, commodities, fig.height= 5, fig.width = 6, echo=FALSE}
 #| label: fig-main-margin-cap
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
@@ -142,7 +145,7 @@ ggplot(CMOr |> filter(type!="unknown"))+
     subtitle = NULL,
     caption = 
       str_c(
-        "Last data point for {ld_str}" |> glue::glue(),
+        "Last data point for {ld_str}, 2018=100, log 10 scale" |> glue::glue(),
         "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index (France)",
         "OECD EO110 for exhange rate FRA/USD, EUR/USD", sep="\n"))+
@@ -154,8 +157,9 @@ ggplot(CMOr |> filter(type!="unknown"))+
 Countries, gas and electricity companies and consumers are affected differently in the European
 Union through volumes, but also through prices. Despite price convergence due to the evolution
 towards liberalisation and a single European energy market, national utilities and consumers face
-different prices depending on the contracts signed with suppliers. Most European countries have gone
-from oil-indexation to gas-indexation in the long-term contracts signed with gas suppliers. In the
+different prices depending on the contracts signed with suppliers.
+
+Most European countries have gone from oil-indexation to gas-indexation in the long-term contracts signed with gas suppliers. In the
 European Union, oil-indexation represented nearly 80% of contracts in 2005, and only around 20% in
 2019, replaced by gas-indexation. This trend started, and is most pregnant in Northwest Europe
 (Belgium, Denmark, France, Germany, Ireland, Luxembourg, Netherlands). The change is less dramatic
@@ -172,7 +176,8 @@ interest is to link it directly to their wholesale price so that they do not tak
 The government justified the decision in the objective to "bring the bill closer to the market
 reality". However, if demand is relatively inelastic in the short-term, this price-liberalisation
 increases volatility and risk for countries that produce gas as well as, and more importantly in
-this case, final consumers.\
+this case, final consumers.
+
 Consequently, the impact on consumers, as analysed in this study, does not presume of the impact on
 the economy as a whole: the cost of the price increase can also be borne by the state (through
 subsidies), or by state or private utilities tied by regulations (in France, EDF bore part of the
