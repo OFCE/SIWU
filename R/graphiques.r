@@ -163,7 +163,7 @@ g_wiu <- map(1:3, ~{
     geom_rect(data = ~filter(.x, coicop_digit==3),
               aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1), 
               size=0.01, col="white", show.legend=TRUE)+
-    theme_ofce(base_size = 9)+
+    theme_ofce(base_size = 9, base_family = "Nunito")+
     theme(plot.margin = margin(12,12,12,12,"pt"), panel.spacing = unit(6,"pt"),
           legend.position = "bottom", legend.key.size = unit(8, "pt"), legend.text = element_text(size=rel(0.7)),
           axis.text = element_text(size = rel(0.5)), axis.line = element_line(size=unit(0.1, "pt")),
@@ -535,6 +535,8 @@ cts <- imap(table_index, ~{
   countries_table
 })
 
-save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, since_1y, since_wiu,
+save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, 
+     str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, 
+     since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
      file="data/sorties.rdata")
 
