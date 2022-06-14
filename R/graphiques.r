@@ -354,8 +354,8 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
   geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
   geom_point(aes(x=Q5), size=3.5, col="steelblue4") +
-  geom_text(aes(x=Q1), label="Q1", size=2, col="white", fontface="bold" ) +
-  geom_text(aes(x=Q5), label="Q5", size=2, col="white", fontface="bold") +
+  geom_text(aes(x=Q1), label="Q1", size=6/.pt, col="white", fontface="bold" ) +
+  geom_text(aes(x=Q5), label="Q5", size=6/.pt, col="white", fontface="bold") +
   scale_x_continuous(labels = scales::label_percent(1),
                      breaks = scales::breaks_width(0.01))+
   ylab(NULL) + xlab(NULL) +
@@ -379,8 +379,8 @@ quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::count
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
   geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
   geom_point(aes(x=Q5), size=3.5, col="steelblue4") +
-  geom_text(aes(x=Q1), label="Q1", size=2, col="white", fontface="bold" ) +
-  geom_text(aes(x=Q5), label="Q5", size=2, col="white", fontface="bold") +
+  geom_text(aes(x=Q1), label="Q1", size=6/.pt, col="white", fontface="bold" ) +
+  geom_text(aes(x=Q5), label="Q5", size=6/.pt, col="white", fontface="bold") +
   scale_x_continuous(labels = scales::label_percent(1),
                      breaks = scales::breaks_width(0.01))+
   ylab(NULL) + xlab(NULL) +
