@@ -9,6 +9,12 @@ library(tempdisagg)
 library(ofce)
 library(lubridate)
 library(ggh4x)
+library(showtext)
+
+sysfonts::font_add_google('Nunito')
+showtext_opts(dpi = 600)
+showtext::showtext_auto()
+
 # la source des données de prix est la banque mondiale
 # https://www.worldbank.org/en/research/commodity-markets
 fs::dir_create("data")
