@@ -10,6 +10,11 @@ library(colorspace)
 library(ggflags)
 library(paletteer)
 library(glue)
+library(showtext)
+
+sysfonts::font_add_google('Nunito')
+showtext_opts(dpi = 600)
+showtext::showtext_auto()
 
 outcome_sorted <- qs::qread("data/outcome_sorted.qs")
 inf_sorted <- qs::qread("data/inf_sorted.qs")

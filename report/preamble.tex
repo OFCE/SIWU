@@ -3,6 +3,7 @@
 \usepackage{fancyhdr}
 \usepackage{fontspec}
 \usepackage{placeins}
+\usepackage{graphbox}
 
 \renewcommand{\topfraction}{.9}
 \renewcommand{\bottomfraction}{.7}
@@ -21,8 +22,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LO,LE]{Social Impact of War in Ukraine}
-%\fancyfoot[LO,LE]{\includegraphics[width=400mm]{../www/ofce.png}}
-\fancyfoot[LO,LE]{OFCE}
-\fancyfoot[CO, CE]{\today}
-\fancyfoot[RE,RO]{\thepage}
+\fancyhead[LO, RE]{Social Impact of War in Ukraine}
+\fancyhead[RO, LE]{\includegraphics[align=c, width=0.8cm]{../www/ofce.png}}
+\fancyfoot[LO, RE]{\today}
+\fancyfoot[RE, LO]{\thepage}

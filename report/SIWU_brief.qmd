@@ -3,7 +3,7 @@ title: "Social Impact of the War in Ukraine"
 author: "Guillaume Allègre, François Geerolf, Xavier Timbeau"
 date: '2022-05-21'
 abstract: |
-    Using data on HICP per COICOP and quintile, we calculate for EU memeber states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are alos an important factor.
+    Using data on HICP per COICOP and quintile, we calculate for EU memeber states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>.
 format:
   html: 
     toc: true
@@ -13,10 +13,10 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
-    number-depth: 1
+    number-depth: 1 
     documentclass: scrartcl
     classoption: 
-    - DIV=9
+    - DIV=14
     mainfont: Nunito
     papersize: a4
     fontsize: 9pt
@@ -43,24 +43,23 @@ library(ggh4x)
 library(ofce)
 library(showtext)
 sysfonts::font_add_google('Nunito')
-
+showtext_opts(dpi = 300)
 showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
 options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Nunito")
-options(ofce.base_size = 8)
+options(ofce.base_size = 9)
 ```
 
 # Social Impact of War in Ukraine brief
 
 The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
 cohesion in Europe. The response operates in multiple dimensions, and we propose to analyse the
-direct consequences of the invasion on the daily lives of Europeans in the short term. Code and data
-used in the note are available at <http://github.com/ofce/SIWU>.
+direct consequences of the invasion on the daily lives of Europeans in the short term.
 
 ## Main channels
 
-The main channel that we identify, concerning the social impact of the War, is the rise in the
+The main channel that we id entify, concerning the social impact of the War, is the rise in the
 prices of consumer goods or services linked to actual or anticipated interruptions in the delivery
 of certain products imported from Russia or Ukraine. These products are mainly crude oil, gas,
 certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. There are
@@ -95,7 +94,7 @@ Our methodology is as follows:
     accessible at <https://ofce.shinyapps.io/siwu/>.
 
 [^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from Bureau of
-    Census. All codes are available at github.com/ofce/siwu.
+    Census.
 
 # Context
 
@@ -134,8 +133,7 @@ differences.
 [^2]: Odyssee-Mure:
     <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
 
-```{r, commodities, fig.height= 6, fig.width = 6, echo=FALSE}
-#| label: fig-commodities
+```{r, commodities, fig.height= 8, fig.width = 8, echo=FALSE, dpi=300, dev="ragg_png"}
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
@@ -147,7 +145,7 @@ ggplot(CMOr |> filter(type!="unknown"))+
                 guide = "axis_minor")+
   geom_text(data=CMOd |> filter(type!="unknown"), 
             aes(x=ymd("2022-01-01"), y=18, label=last_text, color= type), 
-            hjust=1, vjust=1, size=2, show.legend=FALSE)+
+            hjust=1, vjust=1, size=6/.pt, show.legend=FALSE)+
   scale_color_manual(values = c(food = cocol[["CP01"]], 
                                 nrg = cocol[["CP07"]], 
                                 fer = cocol[["CP05"]])) +
@@ -158,17 +156,16 @@ ggplot(CMOr |> filter(type!="unknown"))+
     subtitle = NULL,
     caption = 
       str_c(
-        "Last data point for {ld_str}, 2018=100, log 10 scale" |> glue::glue(),
+        "Last data point for {ld_str}, real prices using France price and exhange rate indexes, 2018=100, log 10 scale" |> glue::glue(),
         "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index (France)",
         "OECD EO110 for exhange rate FRA/USD, EUR/USD", 
         sep="\n"))+
-  theme_ofce(base_size = 24)+
+  theme_ofce()+
   scale_x_date(guide="axis_minor", 
                date_minor_breaks = "1 year", 
                date_labels = "%Y") +
-  theme(axis.text = element_text(size=rel(0.75)),
-        plot.caption = element_text(size=rel(0.75)))
+  theme(panel.spacing = unit(3, "pt"))
 ```
 
 Countries, gas and electricity companies and consumers are affected differently in the European
@@ -205,6 +202,8 @@ will be different: in the first case, for the same amount of additional governme
 will be no or less change in prices and income, whereas in the second case both prices and household
 income will soar.
 
+![Energy final consumtion per capita by vector](../svg/tab1.png){.graph width="16cm"}
+
 We can distinguish several kind of policies that have a different impact on what we measure in this
 report:
 
@@ -239,7 +238,7 @@ policy. Thus by preventing partially pass through to the economy, at a high fisc
 policy can be free of inflation risk and address the slowdown of the economy induced by the transfer
 to commodities producers.
 
-![Energy final consumtion per capita by vector](../svg/tab1.png){.graph width="16cm"}
+
 
 # Results: general discussion
 
@@ -250,10 +249,10 @@ In most countries, the COICOP categories concerned by prices increases are trans
 CP0722 which are "Fuels and lubricants for personal transport equipment", and various categories of
 energy for housing (heating, hot water or appliances), in the categories CP0451 to CP0454
 (Electricity, Gas, liquid fuel, solid fuel). In some countries, some food categories are displaying
-a sharp increase (especially oils and fat). Tables in the annex are summarizing the most important
+a sharp increase (especially oils and fat). Annex tables are summarizing the most important
 increases.
 
-```{r, priceinc, fig.height= 6, fig.width = 6, dev="ragg_png", dpi=600, echo=FALSE}
+```{r, priceinc, fig.height= 8, fig.width = 8, dev="ragg_png", dpi=300, echo=FALSE}
 #| label: fig-priceinc 
 #| fig-cap: "Price increase since War in Ukraine (1/3)"
 load("../data/sorties.rdata")
@@ -265,20 +264,15 @@ g_wiu <- map(1:3, ~{
     geom_rect(data = ~filter(.x, coicop_digit==3),
               aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1), 
               size=0.01, col="white", show.legend=TRUE)+
-    theme_ofce(base_size = 12, base_family = "Nunito")+
-    theme(plot.margin = margin(0,0,0,0,"pt"), panel.spacing = unit(6,"pt"),
-          legend.position = "bottom", legend.key.size = unit(8, "pt"), 
-          legend.text = element_text(size=rel(0.7)),
-          axis.text = element_text(size = rel(0.5)), axis.line = element_line(size=unit(0.1, "pt")),
-          axis.ticks.length = unit(0.5,"pt"), axis.ticks = element_line(size=unit(0.1, "pt")),
-          plot.caption=element_text(size=rel(0.5), lineheight = 1, margin=margin()))+
+    theme_ofce()+
+    theme(legend.position = "bottom", legend.key.size = unit(8, "pt"))+
     guides(color=guide_legend(ncol=3, nrow=4))+
     scale_color_manual(labels = coicops$short_label2,
                        values = coicops |> pull(color, name = coicop), 
                        aesthetics = c("color","fill"), 
                        name=NULL) +
     labs(title = NULL,
-         subtitle = "from February to {str_to}, subfig {.x}." |> glue::glue(),
+         subtitle = "from February 2022 to {str_to}, subfig {.x}." |> glue::glue(),
          caption = str_c(
            "Reading note: each 3 digit COICOP is represented in decreasing inflation order",
            "Height of the bar is the increase in prices, width if the weight in HICP, hence the area is the contribution",
@@ -291,7 +285,7 @@ g_wiu <- map(1:3, ~{
                        oob=scales::oob_squish) +
     ggrepel::geom_text_repel(
       aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
-      size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+      size=4/.pt, segment.size=0.1, min.segment.length = 0, 
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     ggforce::facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
 })
