@@ -104,7 +104,7 @@ one the main source of energy in Europe (21.5% of EU's primary energy consumptio
 households) and Russia is the main supplier. Furthermore, Gas is relatively cheap: the average final
 household price for kWh is 6.5 cents against 21,6 cents per kWh from electricity. The EU imports 80%
 of its total gas needs, around half of it (43%) from Russia. Other suppliers include Norway (24%),
-Algeria (13%) and the US (7%). On March 8th, the Commission published a plan (*REPowerEU*) to reach
+Algeria (13%) and the US (7%). On March 8th, the Commission published a plan (REPowerEU) to reach
 compete independence from Russian fossil fuel "well before the end of the decade". However, in the
 short term, supplier substitution is hard as most of these imports come through pipelines and
 infrastructures for Liquefied natural gas (LNG) is insufficient. As for now, Russia has continued to
@@ -142,11 +142,15 @@ gcom <- qs::qread("../data/gcom.qs")
 load("../data/gcom.rdata")
 ggplot(CMOr |> filter(type!="unknown"))+
   geom_line(aes(x=time, y=pcom_real, color=type), show.legend = FALSE, size=0.25)+
-  scale_y_log10(breaks = scales::log_breaks(10), minor_breaks = scales::log_breaks(16), guide = "axis_minor")+
+  scale_y_log10(breaks = scales::log_breaks(10), 
+                minor_breaks = scales::log_breaks(16),
+                guide = "axis_minor")+
   geom_text(data=CMOd |> filter(type!="unknown"), 
             aes(x=ymd("2022-01-01"), y=18, label=last_text, color= type), 
             hjust=1, vjust=1, size=2, show.legend=FALSE)+
-  scale_color_manual(values = c(food = cocol[["CP01"]], nrg = cocol[["CP07"]], fer = cocol[["CP05"]]))+
+  scale_color_manual(values = c(food = cocol[["CP01"]], 
+                                nrg = cocol[["CP07"]], 
+                                fer = cocol[["CP05"]])) +
   xlab(NULL)+ylab(NULL)+
   facet_wrap(vars(variable), ncol = 4)+
   labs(
@@ -157,10 +161,14 @@ ggplot(CMOr |> filter(type!="unknown"))+
         "Last data point for {ld_str}, 2018=100, log 10 scale" |> glue::glue(),
         "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index (France)",
-        "OECD EO110 for exhange rate FRA/USD, EUR/USD", sep="\n"))+
-  theme_ofce()+
-  scale_x_date(guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y") +
-  theme(axis.text.y = element_text(size=rel(0.75)))
+        "OECD EO110 for exhange rate FRA/USD, EUR/USD", 
+        sep="\n"))+
+  theme_ofce(base_size = 24)+
+  scale_x_date(guide="axis_minor", 
+               date_minor_breaks = "1 year", 
+               date_labels = "%Y") +
+  theme(axis.text = element_text(size=rel(0.75)),
+        plot.caption = element_text(size=rel(0.75)))
 ```
 
 Countries, gas and electricity companies and consumers are affected differently in the European
@@ -245,11 +253,49 @@ energy for housing (heating, hot water or appliances), in the categories CP0451 
 a sharp increase (especially oils and fat). Tables in the annex are summarizing the most important
 increases.
 
-```{r, priceinc, fig.height= 6, fig.width = 6, echo=FALSE}
+```{r, priceinc, fig.height= 6, fig.width = 6, dev="ragg_png", dpi=600, echo=FALSE}
 #| label: fig-priceinc 
 #| fig-cap: "Price increase since War in Ukraine (1/3)"
 load("../data/sorties.rdata")
-print(g_wiu[[1]] %+% labs(title=NULL))
+g_wiu <- map(1:3, ~{
+  gg <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu)) +
+    geom_rect(data = ~filter(.x, coicop_digit==0),
+              aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd), 
+              fill=NA, col="black", size=0.1,  show.legend=FALSE)+
+    geom_rect(data = ~filter(.x, coicop_digit==3),
+              aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1), 
+              size=0.01, col="white", show.legend=TRUE)+
+    theme_ofce(base_size = 12, base_family = "Nunito")+
+    theme(plot.margin = margin(0,0,0,0,"pt"), panel.spacing = unit(6,"pt"),
+          legend.position = "bottom", legend.key.size = unit(8, "pt"), 
+          legend.text = element_text(size=rel(0.7)),
+          axis.text = element_text(size = rel(0.5)), axis.line = element_line(size=unit(0.1, "pt")),
+          axis.ticks.length = unit(0.5,"pt"), axis.ticks = element_line(size=unit(0.1, "pt")),
+          plot.caption=element_text(size=rel(0.5), lineheight = 1, margin=margin()))+
+    guides(color=guide_legend(ncol=3, nrow=4))+
+    scale_color_manual(labels = coicops$short_label2,
+                       values = coicops |> pull(color, name = coicop), 
+                       aesthetics = c("color","fill"), 
+                       name=NULL) +
+    labs(title = NULL,
+         subtitle = "from February to {str_to}, subfig {.x}." |> glue::glue(),
+         caption = str_c(
+           "Reading note: each 3 digit COICOP is represented in decreasing inflation order",
+           "Height of the bar is the increase in prices, width if the weight in HICP, hence the area is the contribution",
+           "Source: Eurostat prc_hicp_midx, prc_hicp_inw", sep="\n"))+
+    scale_x_continuous(limits=c(0,1),
+                       name="Cumulative weight in HICP", 
+                       labels=scales::label_percent(1))+
+    scale_y_continuous(limits=c(-0.1,0.45), 
+                       name="Increase in price since Feb. 22",
+                       oob=scales::oob_squish) +
+    ggrepel::geom_text_repel(
+      aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
+      size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+      max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
+    ggforce::facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
+})
+g_wiu[[1]]
 ```
 
 ![Price increase since War in Ukraine (1/3)](../svg/depuis_wiu_1.png){.graph width="13.5cm"}

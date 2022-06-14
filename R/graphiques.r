@@ -536,7 +536,8 @@ cts <- imap(table_index, ~{
 })
 
 save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, 
-     str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, 
+     str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, str_to,
      since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
+     coicops,
      file="data/sorties.rdata")
 
