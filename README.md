@@ -34,7 +34,7 @@ summarized in thins comparison graph:
 
 Using World Bank commodity prices we build a real price index starting in 1960 for a selection of commodity and build a graph panel of those real indexes. The scale is a log base 10, in order to provide meaningful analysis and all indexes are rebased as being on average 100 during the year 2018 (before the COVID, roughly). This produce the following graph:
 
-![](svg/gcom2000.png)
+<img src="svg/gcom2000.png" width="826"/>
 
 ## report
 

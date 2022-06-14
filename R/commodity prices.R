@@ -172,7 +172,7 @@ gcom <- ggplot(CMOr |> filter(type!="unknown"))+
         "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index for France",
         "OECD EO110 for exhange rate FRA/USD, EUR/USD", sep="\n"))+
-  theme_ofce(base_size = 8, base_family = "Nunito")+
+  theme_ofce(base_size = 9, base_family = "Nunito")+
   scale_x_date(guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.y = element_text(size=rel(0.75)))
 
@@ -180,5 +180,5 @@ graph2svg(gcom)
 graph2png(gcom, width = 16, height = 23, dpi=600)
 save(gcom, CMOr, CMOd, cocol, ld_str, file="data/gcom.rdata")
 gcom2000 <- gcom %+% scale_x_date(limits = c(ymd("2000-01-01"), NA), guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y")
-graph2svg(gcom2000, ratio = 16/9, width = 25)
-graph2png(gcom2000, ratio = 16/9, width = 25)
+graph2svg(gcom2000, ratio = 16/9, width = 16)
+graph2png(gcom2000, width = 16, height = 23, dpi=600)
