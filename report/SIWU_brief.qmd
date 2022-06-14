@@ -47,7 +47,8 @@ sysfonts::font_add_google('Nunito')
 showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
 options(ofce.background_color = "#F9F4ED")
-
+options(ofce.base_family = "Nunito")
+options(ofce.base_size = 8)
 ```
 
 # Social Impact of War in Ukraine brief
@@ -134,7 +135,7 @@ differences.
     <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
 
 ```{r, commodities, fig.height= 6, fig.width = 6, echo=FALSE}
-#| label: fig-main-margin-cap
+#| label: fig-commodities
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
@@ -157,7 +158,7 @@ ggplot(CMOr |> filter(type!="unknown"))+
         "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index (France)",
         "OECD EO110 for exhange rate FRA/USD, EUR/USD", sep="\n"))+
-  theme_ofce(base_size = 8, base_family = "Nunito")+
+  theme_ofce()+
   scale_x_date(guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.y = element_text(size=rel(0.75)))
 ```
@@ -244,11 +245,11 @@ energy for housing (heating, hot water or appliances), in the categories CP0451 
 a sharp increase (especially oils and fat). Tables in the annex are summarizing the most important
 increases.
 
-```{r, commodities, fig.height= 6a, fig.width = 6, echo=FALSE}
-#| label: fig-main-margin-cap 
+```{r, priceinc, fig.height= 6, fig.width = 6, echo=FALSE}
+#| label: fig-priceinc 
 #| fig-cap: "Price increase since War in Ukraine (1/3)"
 load("../data/sorties.rdata")
-print(g_wiu[[1]] %+% theme(text = element_text(family = "Nunito")))
+print(g_wiu[[1]] %+% labs(title=NULL))
 ```
 
 ![Price increase since War in Ukraine (1/3)](../svg/depuis_wiu_1.png){.graph width="13.5cm"}
