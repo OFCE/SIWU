@@ -24,17 +24,17 @@ We got this kind of results:
 
 And a break down per quintile:
 
-![](svg/coicop_l1_wiu_1.png)
+<img src="svg/coicop_l1_wiu_1.png" width="100cm"/>
 
 summarized in thins comparison graph:
 
-![](svg/quantiles1et5.png)
+<img src="svg/quantiles1et5.png" width="4252"/>
 
 ## other data
 
 Using World Bank commodity prices we build a real price index starting in 1960 for a selection of commodity and build a graph panel of those real indexes. The scale is a log base 10, in order to provide meaningful analysis and all indexes are rebased as being on average 100 during the year 2018 (before the COVID, roughly). This produce the following graph:
 
-<img src="svg/gcom2000.png" width="826"/>
+<img src="svg/gcom2000.png" width="21.9cm"/>
 
 ## report
 

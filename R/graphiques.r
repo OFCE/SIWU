@@ -23,7 +23,7 @@ coicops <- qs::qread("data/coicops.qs", nthreads = 4) |>
 all_coicop <- qs::qread("data/all_coicop.qs", nthreads = 4)
 eucountries <- setdiff(eurostat::eu_countries$code, "UK")
 
-png_w <- 16
+png_w <- 15
 png_h <- 20
 
 dmax <- inf_sorted |>
@@ -366,7 +366,7 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
         axis.ticks.y = element_blank(),
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
-  labs(title = "Impact on quintile income of invasion of Ukraine",
+  labs(title = NULL,
        subtitle = str_c("Oils and fat, cereals, fuels for transportation and heating",
                         "from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en')} {year(to_date)}" |> glue(), sep="\n"),
        caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for the selected products.",
@@ -391,13 +391,15 @@ quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::count
         axis.ticks.y = element_blank(),
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
-  labs(title = "Impact par quintile sur le revenu de la hausse des prix depuis l'invasion de l'Ukraine",
-       subtitle = str_c("Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage",
-                        "de février 2022 à avril 2022" |> glue(), sep="\n"),
+  labs(title = NULL,
+       subtitle = NULL,
        caption = str_c("Note: L'impact sur chaque quintile est en % du revenu du quintinle  pour chque catégorie de produit (88 produits COICOP).",
-                       "L'impact ets la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
+                       "L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
+                       "Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage",
+                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722",
+                       "De février 2022 à avril 2022",
                        "Source: Eurostat HICP et revenus par quintile",
-                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722", sep="\n"))
+                       sep="\n"))
 
 graph2svg(quantiles1et5)
 graph2svg(quantiles1et5.fr)
@@ -543,6 +545,6 @@ cts <- imap(table_index, ~{
 save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, 
      str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, str_to,
      since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
-     coicops,
+     coicops, to_date_wiu,
      file="data/sorties.rdata")
 

@@ -3,12 +3,15 @@ title: "Social Impact of the War in Ukraine"
 author: "Guillaume Allègre, François Geerolf, Xavier Timbeau"
 date: '2022-05-21'
 abstract: |
-    Using data on HICP per COICOP and quintile, we calculate for EU memeber states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>.
+    Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>.
 format:
   html: 
     toc: true
     theme: simplex
     self-contained: true
+    fig-dpi: 300
+    fig-format: svg
+    fig-width: 5
   pdf:
     toc: true
     toc-depth: 2
@@ -16,13 +19,15 @@ format:
     number-depth: 1 
     documentclass: scrartcl
     classoption: 
-    - DIV=14
+    - DIV=12
     mainfont: Nunito
     papersize: a4
     fontsize: 9pt
     fig-cap-location: top
     include-in-header: 'preamble.tex'
     extra_dependencies: ["float"]
+    fig-dpi: 300
+    fig-format: png
 editor_options: 
     markdown: 
       wrap: 100
@@ -30,25 +35,28 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE,
+  echo = FALSE,
   fig.pos="htb", 
-  out.extra="")
+  out.extra="",
+  dev="ragg_png",
+  out.width="100%",
+  fig.showtext=TRUE)
 ```
 
-```{r datainit, echo=FALSE, include=FALSE}
+```{r datainit, include=FALSE}
 library(tidyverse)
 library(lubridate)
 library(glue)
 library(ggh4x)
 library(ofce)
 library(showtext)
+library(markdown)
 sysfonts::font_add_google('Nunito')
 showtext_opts(dpi = 300)
-showtext::showtext_auto()
 objects <- load("../data/sorties.rdata")
 options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Nunito")
-options(ofce.base_size = 9)
+options(ofce.base_size = 7)
 ```
 
 # Social Impact of War in Ukraine brief
@@ -98,47 +106,34 @@ Our methodology is as follows:
 
 # Context
 
-The most important tensions concerning price hikes in Europe today come from the gas market. Gas is
-one the main source of energy in Europe (21.5% of EU's primary energy consumption ; 32.1% for
-households) and Russia is the main supplier. Furthermore, Gas is relatively cheap: the average final
-household price for kWh is 6.5 cents against 21,6 cents per kWh from electricity. The EU imports 80%
-of its total gas needs, around half of it (43%) from Russia. Other suppliers include Norway (24%),
-Algeria (13%) and the US (7%). On March 8th, the Commission published a plan (REPowerEU) to reach
-compete independence from Russian fossil fuel "well before the end of the decade". However, in the
-short term, supplier substitution is hard as most of these imports come through pipelines and
-infrastructures for Liquefied natural gas (LNG) is insufficient. As for now, Russia has continued to
-supply European countries (more or less, the recent weeks have seen some developments there) under
-the terms of long-term contracts signed with national energy companies. It has however decreased its
-supplies in the spot market. Also, the fear of an embargo has had a huge impact on gas prices in
-Europe. Dutch TTF Gas Futures trade since April 2022 at around 100 euros per megawatt hour, against
-20 euros at the same time in 2021. This affects directly wholesale electricity prices as gas is a
-major contributor to EU electricity production. Consumers across the European Union have different
-exposures to energy price increases, depending on nationality, income, mode of transport and
-domestic heating. Households represent a quarter (26%) of final energy consumption. National
-exposures of households to energy prices differ greatly. If we look at energy consumption in housing
-by households, at the EU level, space heating represents according to Eurostat (2019) 63% of
-consumption; and 32% of energy consumption is provided by gas.
+The most important tensions concerning price hikes in Europe today come from the gas market (see
+@fig-com). Gas is one the main source of energy in Europe (21.5% of EU's primary energy consumption
+; 32.1% for households) and Russia is the main supplier. Furthermore, Gas is relatively cheap: the
+average final household price for kWh is 6.5 cents against 21,6 cents per kWh from electricity. The
+EU imports 80% of its total gas needs, around half of it (43%) from Russia. Other suppliers include
+Norway (24%), Algeria (13%) and the US (7%). On March 8th, the Commission published a plan
+(REPowerEU) to reach compete independence from Russian fossil fuel "well before the end of the
+decade". However, in the short term, supplier substitution is hard as most of these imports come
+through pipelines and infrastructures for Liquefied natural gas (LNG) is insufficient. As for now,
+Russia has continued to supply European countries (more or less, the recent weeks have seen some
+developments there) under the terms of long-term contracts signed with national energy companies. It
+has however decreased its supplies in the spot market. Also, the fear of an embargo has had a huge
+impact on gas prices in Europe. Dutch TTF Gas Futures trade since April 2022 at around 100 euros per
+megawatt hour, against 20 euros at the same time in 2021. This affects directly wholesale
+electricity prices as gas is a major contributor to EU electricity production. Consumers across the
+European Union have different exposures to energy price increases, depending on nationality, income,
+mode of transport and domestic heating. Households represent a quarter (26%) of final energy
+consumption. National exposures of households to energy prices differ greatly. If we look at energy
+consumption in housing by households, at the EU level, space heating represents according to
+Eurostat (2019) 63% of consumption; and 32% of energy consumption is provided by gas.
 
-However, gas is not used in small islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%)
-and Finland (0,5%), who use mostly derived heat and electricity (see Table). On the other hand, gas
-represents the majority of energy in housing in the Netherlands (69,3%) and Italy (51,8%). Although,
-the need of energy might differ between nations, especially for heating purposes due to climate and
-thermal efficiency of housings: households in Malta, Portugal, Spain and Cyprus use far less energy
-than in Luxembourg, Austria and Denmark. Likewise, passenger mobility differs between Italy, Norway,
-Finland, Germany, France (above 13 000 km per capita per year) on one hand, and Romania and Slovakia
-(around 7 500 km/c/y)[^2]. Moreover, only 30% of travel distance in Romania is by car as driver
-against 63% in Italy. Some, but not all, of these differences can be attributed to income
-differences.
-
-[^2]: Odyssee-Mure:
-    <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
-
-```{r, commodities, fig.height= 8, fig.width = 8, echo=FALSE, dpi=300, dev="ragg_png"}
+```{r, commodities, fig.asp=1}
+#| label: fig-com
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
 load("../data/gcom.rdata")
-ggplot(CMOr |> filter(type!="unknown"))+
+g <- ggplot(CMOr |> filter(type!="unknown"))+
   geom_line(aes(x=time, y=pcom_real, color=type), show.legend = FALSE, size=0.25)+
   scale_y_log10(breaks = scales::log_breaks(10), 
                 minor_breaks = scales::log_breaks(16),
@@ -166,12 +161,29 @@ ggplot(CMOr |> filter(type!="unknown"))+
                date_minor_breaks = "1 year", 
                date_labels = "%Y") +
   theme(panel.spacing = unit(3, "pt"))
+g
 ```
+
+However, gas is not used in small islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%)
+and Finland (0,5%), who use mostly derived heat and electricity (see @fig-nrg). On the other hand,
+gas represents the majority of energy in housing in the Netherlands (69,3%) and Italy (51,8%).
+Although, the need of energy might differ between nations, especially for heating purposes due to
+climate and thermal efficiency of housings: households in Malta, Portugal, Spain and Cyprus use far
+less energy than in Luxembourg, Austria and Denmark. Likewise, passenger mobility differs between
+Italy, Norway, Finland, Germany, France (above 13 000 km per capita per year) on one hand, and
+Romania and Slovakia (around 7 500 km/c/y)[^2]. Moreover, only 30% of travel distance in Romania is
+by car as driver against 63% in Italy. Some, but not all, of these differences can be attributed to
+income differences.
+
+[^2]: Odyssee-Mure:
+    <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
 
 Countries, gas and electricity companies and consumers are affected differently in the European
 Union through volumes, but also through prices. Despite price convergence due to the evolution
 towards liberalisation and a single European energy market, national utilities and consumers face
 different prices depending on the contracts signed with suppliers.
+
+![Energy final consumtion per capita by vector](../svg/tab1.png){#fig-nrg}
 
 Most European countries have gone from oil-indexation to gas-indexation in the long-term contracts
 signed with gas suppliers. In the European Union, oil-indexation represented nearly 80% of contracts
@@ -201,8 +213,6 @@ to vulnerable households according to income and/or energy consumption. In both 
 will be different: in the first case, for the same amount of additional government deficit, there
 will be no or less change in prices and income, whereas in the second case both prices and household
 income will soar.
-
-![Energy final consumtion per capita by vector](../svg/tab1.png){.graph width="16cm"}
 
 We can distinguish several kind of policies that have a different impact on what we measure in this
 report:
@@ -238,12 +248,10 @@ policy. Thus by preventing partially pass through to the economy, at a high fisc
 policy can be free of inflation risk and address the slowdown of the economy induced by the transfer
 to commodities producers.
 
-
-
 # Results: general discussion
 
-The 3 following graphs are displaying the most important increases in prices since the begining of
-the war in Ukraine.
+The 3 following graphs ([@fig-priceinc1; @fig-priceinc2; @fig-priceinc3]) are displaying the most
+important increases in prices since the begining of the war in Ukraine.
 
 In most countries, the COICOP categories concerned by prices increases are transportation especially
 CP0722 which are "Fuels and lubricants for personal transport equipment", and various categories of
@@ -252,9 +260,8 @@ energy for housing (heating, hot water or appliances), in the categories CP0451 
 a sharp increase (especially oils and fat). Annex tables are summarizing the most important
 increases.
 
-```{r, priceinc, fig.height= 8, fig.width = 8, dev="ragg_png", dpi=300, echo=FALSE}
-#| label: fig-priceinc 
-#| fig-cap: "Price increase since War in Ukraine (1/3)"
+```{r, fig.asp = 1.05, fig.cap="Price increase since War in Ukraine (1/3)"}
+#| label: fig-priceinc1
 load("../data/sorties.rdata")
 g_wiu <- map(1:3, ~{
   gg <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu)) +
@@ -289,25 +296,65 @@ g_wiu <- map(1:3, ~{
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     ggforce::facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
 })
+coicop_legend <- ggpubr::get_legend(g_wiu[[1]])
 g_wiu[[1]]
 ```
 
-![Price increase since War in Ukraine (1/3)](../svg/depuis_wiu_1.png){.graph width="13.5cm"}
+```{r, fig.asp = 1., fig.cap="Price increase since War in Ukraine (2/3)"}
+#| label: fig-priceinc2
+g_wiu[[2]] %+% guides(fill="none", color="none")
+```
 
-![Price increase since War in Ukraine (2/3)](../svg/depuis_wiu_2.png){.graph width="16cm"}
-
-![Price increase since War in Ukraine (3/3)](../svg/depuis_wiu_3.png){.graph width="16cm"}
+```{r, fig.asp = 1., fig.cap="Price increase since War in Ukraine (3/3)"}
+#| label: fig-priceinc3
+g_wiu[[3]] %+% guides(fill="none", color="none")
+```
 
 \FloatBarrier
 
-The following 3 graphs are displaying the breakdown by quintile of the impact in purchasing power
-per countries.
+The following 3 graphs (see @fig-impact1, @fig-impact2, @fig-impact3) are displaying the breakdown
+by quintile of the impact in purchasing power per countries.
 
-![Impact on income per quintile (1/3)](../svg/coicop_l1_wiu_1.png){.graph width="16cm"}
+```{r, impact1, fig.asp = 1.05, fig.cap="Impact on income per quintile (1/3)"}
+#| label: fig-impact1
+gql1 <- imap(1:3, ~{
+  gg <- ggplot(outcome_sorted |> filter(d==dmax_o$dmax, ref==since_wiu) ) +
+    geom_col(data = ~filter(.x, coicop_digit==1), 
+             aes(x=quantile, y=outcome, fill = coicop1), 
+             col="white", size=0.1, width=0.6) +
+    geom_col(data = ~filter(.x, coicop=="CP00"),
+             aes(x=quantile, y=outcome),
+             col="black", fill=NA, size=0.1, width=0.6) +
+    scale_y_continuous(labels = scales::label_percent(1),
+                       breaks=scales::breaks_width(0.02))+
+    scale_fill_manual(labels = coicops$short_label2,
+                      values = coicops |> pull(color, name = coicop),
+                      name=NULL)+
+    xlab(NULL)+ylab("impact as income share")+
+    ggforce::facet_wrap_paginate(vars(geo_f), nrow=3, ncol=3, page=.x)+
+    theme_ofce() +
+    theme(legend.position = "bottom", legend.key.size = unit(9, "pt"))+
+    guides(fill=guide_legend(ncol=3, nrow=4))+
+    labs(title=NULL,
+         subtitle=str_c("% of quintile income", 
+                        "from {str_wiu} to {str_to}", sep="\n") |> glue(),
+         caption=str_c("Sources: Eurostat HICP, consumption per quintile (hbs_str_t223), consumtion per cociop (hbs_str_t211),",
+                       "income and expenditure per quintile (icw_res_02)", sep="\n"))
+})
 
-![Impact on income per quintile (2/3)](../svg/coicop_l1_wiu_2.png){.graph width="16cm"}
+gql1[[1]]
 
-![Impact on income per quintile (3/3)](../svg/coicop_l1_wiu_3.png){.graph width="16cm"}
+```
+
+```{r, impact2, fig.asp = 1., fig.cap="Impact on income per quintile (2/3)"}
+#| label: fig-impact2
+gql1[[2]] %+% guides(fill="none", color="none")
+```
+
+```{r, impact3, fig.asp = 1., fig.cap="Impact on income per quintile (2/3)"}
+#| label: fig-impact3
+gql1[[3]] %+% guides(fill="none", color="none")
+```
 
 \FloatBarrier
 
@@ -339,7 +386,9 @@ particularly true in Lithuania, the Netherlands and Greece. The difference betwe
 greater in countries where households are most affected: the poorest households bear the most risk
 from energy and food price volatility.
 
-![Impact on quintile](../svg/quantiles1et5.png){.graph width="16cm"}
+![Impact on quintile](../svg/quantiles1et5.png){}
+
+\FloatBarrier
 
 ::: {.callout-note appearance="minimal" icon="false"}
 ## What impact on poverty rates (according to Eurostat) ?
