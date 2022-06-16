@@ -395,9 +395,9 @@ quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::count
        subtitle = NULL,
        caption = str_c("Note: L'impact sur chaque quintile est en % du revenu du quintinle  pour chque catégorie de produit (88 produits COICOP).",
                        "L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
-                       "Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage",
-                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722",
-                       "De février 2022 à avril 2022",
+                       "Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage,",
+                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722.",
+                       "De février 2022 à avril 2022.",
                        "Source: Eurostat HICP et revenus par quintile",
                        sep="\n"))
 
@@ -488,7 +488,7 @@ outcomeQ1Q5 <- outcome_sorted |>
   rename(qs_Q1 = q_Q1_1y,
          qs_Q5 = q_Q5_1y) |> 
   select(-starts_with("q_"))
-table_index <- distinct(inf_sorted, geo) |> pull(geo) |> sort() |> ksplit(5)
+table_index <- distinct(inf_sorted, geo) |> pull(geo) |> sort() |> ksplit(6)
 cts <- imap(table_index, ~{
   ## data ----------------------
   countries_table <- inf_sorted |>
@@ -502,7 +502,10 @@ cts <- imap(table_index, ~{
     ungroup() |> 
     select(-coicop_digit) |> 
     mutate(ipm = i * pm) |> 
-    pivot_wider(id_cols = c(coicop, geo_f, geo), names_from=c(d,ref), values_from = c(i, ipm, pm), names_glue = "{.value}_{ref}") |>  
+    pivot_wider(id_cols = c(coicop, geo_f, geo),
+                names_from=c(d,ref),
+                values_from = c(i, ipm, pm), 
+                names_glue = "{.value}_{ref}") |>  
     rename(pm = pm_1y) |> select(-pm_wiu) |> 
     left_join(all_coicop |> select(coicop=coicop3, l3), by="coicop") |> 
     mutate(l3 = if_else(is.na(l3), "Total", l3)) |> 
@@ -511,7 +514,7 @@ cts <- imap(table_index, ~{
     mutate(flag = localflag(geo),
            l3 = str_c(coicop, ": ", l3)) |> 
     select(l3, geo_f,  i_1y, i_wiu, ipm_1y, ipm_wiu, o_Q1_wiu, o_Q5_wiu, pm, qs_Q1, qs_Q5) |> 
-    filter(ipm_wiu >= 0.001 | rank(-ipm_wiu)<=5) |> 
+    filter(ipm_wiu >= 0.002 | rank(-ipm_wiu)<=5) |> 
     mutate(
       l3 = str_remove(l3, "CP"),
       l3 = if_else(str_length(l3)>32, str_c(str_sub(l3, 1,29), "..."), l3)) |> 
