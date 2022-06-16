@@ -1,22 +1,22 @@
-# Social Impact of the War in Ukraine
+# Social Impact of the War in Ukraine (SIWU)
 
 > [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Geerolf](mailto:francois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr)
 
-## aim
+## Aim
 
-This repo contains code, data and docs to reproduce a work done for the S&D group at the European Parliament. Using data from Eurostat HICP per coicop at the level 92 and data from Eurostat on consumption share (of income) per quintile and coicop (at the level 38) we evaluate what is the impact of recent price increases on income per quintile.
+This repo contains code, data and documents to reproduce a work done for the S&D group at the European Parliament. Using data from Eurostat HICP per coicop at the level 92 and data from Eurostat on consumption share (of income) per quintile and coicop (at the level 38) we evaluate what is the impact of recent price increases on income per quintile.
 
-Data on HICP is updated every month (plus a flash estimate in between). Data on quintile consumption share is available for the year 2015 (except Italy, 2005).
+Data on HICP is updated every month (plus a flash estimate in between). Data on quintile consumption share is available for the year 2015 (except Italy, for which data is available in 2005).
 
-## tranformation of data
+## Tranformation of data
 
-A number of transformation are applied to data :
+The data is then transformed through numerous steps :
 
-1.  we deseasonalize all prices from the HICP every month. For performance reasons, we use a loess algorithm (`stats::stl)` instead of the usual X11/X13. The deseasonalization is important for CP03 (clothing) products.
+1.  We deseasonalize all prices from the HICP every month. For performance reasons, we use a loess algorithm (`stats::stl`) instead of the usual X11/X13. The deseasonalization is especially important for CP03 (clothing) products.
 
-2.  we extrapolate consumption share per quintile from the level 38 (coicop 2) to to 92 (coicop 3) using a proportional rule
+2.  We extrapolate consumption share per quintile from the level 38 (coicop 2) to to 92 (coicop 3) using a proportional rule.
 
-3.  we shift consumption share per quintile at the level 3 (extrapolated from level 2) from 2015 to 2021 using HICP weights. In the process, we keep only relative shares and align on HICP weights. This allow to break down aggregate effect by quintile. We have not dealt with chained indexes issues in the process. The effect we calculate per quintile per product is not summing to the aggregate effect. However, we checked the discrepancy which remains in tolerable margin.
+3.  We shift consumption share per quintile at the level 3 (extrapolated from level 2) from 2015 to 2021 using HICP weights. In the process, we keep only relative shares and align on HICP weights. This allow to break down aggregate effect by quintile. We have not dealt with chained indexes issues in the process. The effect we calculate per quintile per product is not summing to the aggregate effect. However, we checked the discrepancy which remains in tolerable margin.
 
 We got this kind of results:
 
@@ -24,23 +24,23 @@ We got this kind of results:
 
 And a break down per quintile:
 
-<img src="svg/coicop_l1_wiu_1.png" width="100cm"/>
+<img src="svg/coicop_l1_wiu_1.png" width="4252"/>
 
 summarized in thins comparison graph:
 
 <img src="svg/quantiles1et5.png" width="4252"/>
 
-## other data
+## Other data
 
 Using World Bank commodity prices we build a real price index starting in 1960 for a selection of commodity and build a graph panel of those real indexes. The scale is a log base 10, in order to provide meaningful analysis and all indexes are rebased as being on average 100 during the year 2018 (before the COVID, roughly). This produce the following graph:
 
-<img src="svg/gcom2000.png" width="21.9cm"/>
+<img src="svg/gcom2000.png" width="4252"/>
 
-## report
+## Report
 
 A report is presenting data and analysis. It is located in the `report` folder. The source for report is in `SIWU_brief.qmd` and relies on `{quarto}`. A pdf can be rendered ([SIWU_brief.pdf](report/SIWU_brief.pdf)) or an HTML accessible there: [SIWU_brief.html](report/SIWU_brief.html)
 
-## structure of files and folders
+## Structure of files and folders
 
 R sources files are in the `R` folder.
 
@@ -60,6 +60,6 @@ Once all dependencies are installed, data should be updated automatically when a
 
 Sources are moderately commented and comments are usually in french.
 
-## license
+## License
 
 All code, texts and graph are under a [CECILL-B license](LICENSE.TXT) (a french licence in the spirit of MIT licence). Data is from (what we believe is) open data from various providers and may be subject to specific licenses.
