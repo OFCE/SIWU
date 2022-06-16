@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
   render: 
-  - ../report/SIWU_brief.qmd
+  - SIWU_brief.qmd
 
 website:
   title: "SIWU"
