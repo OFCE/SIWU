@@ -2,10 +2,10 @@ project:
   type: website
   output-dir: docs
   render: 
-  - ../report/SIWU_brief.qmd
+  - SIWU_brief.qmd
 
 website:
-  title: "mysite"
+  title: "SIWU"
   navbar:
     background: primary
     left:
