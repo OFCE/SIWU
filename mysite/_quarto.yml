@@ -5,7 +5,7 @@ project:
   - ../report/SIWU_brief.qmd
 
 website:
-  title: "mysite"
+  title: "SIWU"
   navbar:
     background: primary
     left:

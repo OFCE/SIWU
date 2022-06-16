@@ -136,7 +136,7 @@ Eurostat (2019) 63% of consumption; and 32% of energy consumption is provided by
 #| fig-cap: "Real price of a selection of commodities"
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
-#load("../data/gcom.rdata")
+load("../data/gcom.rdata")
 g <- ggplot(CMOr |> filter(type!="unknown"))+
   geom_line(aes(x=time, y=pcom_real, color=type), show.legend = FALSE, size=0.25)+
   scale_y_log10(breaks = scales::log_breaks(10), 
