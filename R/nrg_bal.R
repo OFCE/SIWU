@@ -3,7 +3,7 @@ library(tidyverse)
 library(gt)
 library(ofce)
 
-setwd("~/Dropbox/github/SIWU")
+#setwd("~/Dropbox/github/SIWU")
 
 eu <- eurostat::eu_countries |> filter(code!="UK")
 
