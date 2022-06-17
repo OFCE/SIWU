@@ -2,6 +2,14 @@
 
 > [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Geerolf](mailto:francois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr)
 
+### last update
+
+HICP update 17/6/2022 [Social Impact of the War in Ukraine](report/SIWU_brief_june_22.pdf)
+
+### older versions
+
+-   HICP update 18/5/2022 [Social Impact of the War in Ukraine](report/SIWU_brief_may_22.pdf)
+
 ## Aim
 
 This repo contains code, data and documents to reproduce a work done for the S&D group at the European Parliament. Using data from Eurostat HICP per coicop at the level 92 and data from Eurostat on consumption share (of income) per quintile and coicop (at the level 38) we evaluate what is the impact of recent price increases on income per quintile.
@@ -54,7 +62,7 @@ A check is done each time you run `make ISGU data.r`, to assess if there is an u
 
 `commodity prices.r` produces the real price graph above and downloads data from World Bank.
 
-Once all dependencies are installed, data should be updated automatically when available.
+Once all dependencies are installed, data should be updated automatically when available. Install notably `devtools::install_github("ofce/ofce")`, `{eurostat}` and some more!
 
 `choc de prix.r` is an attempt to use daily data from Yahoo Finance, but some symbols are not always available so we dropped this method.
 

@@ -14,8 +14,6 @@ library(glue)
 library(showtext)
 
 sysfonts::font_add_google('Nunito')
-showtext_opts(dpi = 600)
-showtext::showtext_auto()
 
 outcome_sorted <- qs::qread("data/outcome_sorted.qs")
 inf_sorted <- qs::qread("data/inf_sorted.qs")
@@ -189,7 +187,7 @@ g_wiu <- map(1:3, ~{
     scale_y_continuous(limits=c(-0.1,0.45), name="Increase in price since Feb. 22", oob=scales::oob_squish) +
     ggrepel::geom_text_repel(
       aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
-      size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+      size=4/.pt, segment.size=0.1, min.segment.length = 0, 
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
   graph2png(gg, file="depuis_wiu_{.x}" |> glue::glue(), width = png_w, height = png_h, dpi=600)
@@ -204,10 +202,7 @@ g_wiu_NLD <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu, geo=="NL"
             aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1), 
             size=0.01, col="white", show.legend=TRUE)+
   theme_ofce(base_size = 9)+
-  theme(plot.margin = margin(12,12,12,12,"pt"), panel.spacing = unit(6,"pt"),
-        legend.position = "bottom", legend.key.size = unit(8, "pt"), legend.text = element_text(size=rel(0.7)),
-        axis.text = element_text(size = rel(0.5)), axis.line = element_line(size=unit(0.1, "pt")),
-        axis.ticks.length = unit(0.5,"pt"), axis.ticks = element_line(size=unit(0.1, "pt")))+
+  theme(legend.position = "bottom", legend.key.size = unit(8, "pt"))+
   guides(color=guide_legend(ncol=3, nrow=4))+
   scale_color_manual(labels = coicops$short_label2,
                      values = coicops |> pull(color, name = coicop), 
@@ -222,8 +217,9 @@ g_wiu_NLD <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu, geo=="NL"
   scale_x_continuous(limits=c(0,1),name="Cumulative weight in HICP", labels=scales::label_percent(1))+
   scale_y_continuous(limits=c(-0.1,0.45), name="Increase in price since Feb. 22", oob=scales::oob_squish) +
   ggrepel::geom_text_repel(
+    data = ~filter(.x, coicop_digit==3),
     aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
-    size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+    size=4/.pt, segment.size=0.1, min.segment.length = 0, 
     max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)
 
 graph2png(g_wiu_NLD, file="depuis_wiu_NLD" |> glue::glue(), width = png_w, height = png_h, dpi=600)

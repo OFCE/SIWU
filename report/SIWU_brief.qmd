@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
   dev="ragg_png",
   out.width="100%",
   fig.showtext=TRUE,
-  cache=TRUE)
+  cache=FALSE)
 ```
 
 ```{r datainit, include=FALSE}
@@ -57,6 +57,7 @@ if (F){
 }
 sysfonts::font_add_google('Nunito')
 showtext_opts(dpi = 300)
+showtext_auto()
 objects <- load("../data/sorties.rdata")
 options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Nunito")
@@ -131,9 +132,10 @@ consumption. National exposures of households to energy prices differ greatly. I
 consumption in housing by households, at the EU level, space heating represents according to
 Eurostat (2019) 63% of consumption; and 32% of energy consumption is provided by gas.
 
-```{r, commodities, fig.asp=1}
+```{r, commodities, fig.asp=1.2}
 #| label: fig-com
 #| fig-cap: "Real price of a selection of commodities"
+# source("../R/make ISGU data.r") and source("../R/commodity prices.r") before running this chunk
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
 load("../data/gcom.rdata")
@@ -194,7 +196,7 @@ signed with gas suppliers. In the European Union, oil-indexation represented nea
 in 2005, and only around 20% in 2019, replaced by gas-indexation. This trend started, and is most
 pregnant in Northwest Europe (Belgium, Denmark, France, Germany, Ireland, Luxembourg, Netherlands).
 The change is less dramatic in Mediterranean (Greece, Italy, Portugal, Spain). Gas-indexed contracts
-have not really increased in Southeast Europe (Bulgaria, Croatia, Romania) or Scandinavia and
+have not really increased in South-east Europe (Bulgaria, Croatia, Romania) or Scandinavia and
 Baltics (Finland, Sweden, Lithuania, Latvia, Estonia). This is important because, in this crisis,
 oil has not increased as much as gas (Brent is up 52% in 1-year, 35% year-to-date). Also, consumers
 might be more or less protected by the contracts they signed with the gas and electricity utilities.
@@ -255,7 +257,7 @@ to commodities producers.
 # Results: general discussion
 
 The 3 following graphs ([@fig-priceinc1; @fig-priceinc2; @fig-priceinc3]) are displaying the most
-important increases in prices since the begining of the war in Ukraine.
+important increases in prices since the beginning of the war in Ukraine.
 
 In most countries, the COICOP categories concerned by prices increases are transportation especially
 CP0722 which are "Fuels and lubricants for personal transport equipment", and various categories of
@@ -264,7 +266,7 @@ energy for housing (heating, hot water or appliances), in the categories CP0451 
 a sharp increase (especially oils and fat). Annex tables are summarizing the most important
 increases.
 
-```{r, fig.asp = 1.05, fig.cap="Price increase since War in Ukraine (1/3)"}
+```{r, fig.asp = 1.15, fig.cap="Price increase since War in Ukraine (1/3)"}
 #| label: fig-priceinc1
 load("../data/sorties.rdata")
 g_wiu <- map(1:3, ~{
@@ -295,21 +297,21 @@ g_wiu <- map(1:3, ~{
                        name="Increase in price since Feb. 22",
                        oob=scales::oob_squish) +
     ggrepel::geom_text_repel(
+      data = ~filter(.x, coicop_digit==3),
       aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
       size=4/.pt, segment.size=0.1, min.segment.length = 0, 
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     ggforce::facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
 })
-coicop_legend <- ggpubr::get_legend(g_wiu[[1]])
 g_wiu[[1]]
 ```
 
-```{r, fig.asp = 1., fig.cap="Price increase since War in Ukraine (2/3)"}
+```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (2/3)"}
 #| label: fig-priceinc2
 g_wiu[[2]] %+% guides(fill="none", color="none")
 ```
 
-```{r, fig.asp = 1., fig.cap="Price increase since War in Ukraine (3/3)"}
+```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (3/3)"}
 #| label: fig-priceinc3
 g_wiu[[3]] %+% guides(fill="none", color="none")
 ```
@@ -390,12 +392,11 @@ particularly true in Lithuania, the Netherlands and Greece. The difference betwe
 greater in countries where households are most affected: the poorest households bear the most risk
 from energy and food price volatility.
 
-![Impact on quintile](../svg/quantiles1et5.png){}
+![Impact on quintile](../svg/quantiles1et5.png)
 
 \FloatBarrier
 
 ::: {.callout-note appearance="minimal" icon="false"}
-
 **What impact on poverty rates (according to Eurostat) ?**
 
 In the European Union, monetary poverty is defined as belonging to a Household whose living standard
@@ -442,7 +443,6 @@ survey). Also, the way people answer surveys might differ across countries and t
 budget and prices): it is a subjective measure. Also, being able to afford a personal car might seen
 pertinent today but not in 20 years. This poses problems when the list of deprivation items needs to
 be updated.
-
 :::
 
 # Results: discussion by country

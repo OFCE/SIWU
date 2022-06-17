@@ -3,8 +3,6 @@
 .Ruserdata
 *.rda
 *.RData
-*.svg
-*.png
 *.rdx
 *.rdata
 nul
