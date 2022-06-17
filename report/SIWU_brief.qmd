@@ -1,9 +1,9 @@
 ---
 title: "Social Impact of the War in Ukraine"
 author: "Guillaume Allègre, François Geerolf, Xavier Timbeau"
-date: 'May 22 HICP/2022-06-16'
+date: '2022-06-17'
 abstract: |
-    Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>.
+    Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>. Updated with HICP release 17/06/2022.
 format:
   html: 
     toc: true
@@ -397,7 +397,8 @@ from energy and food price volatility.
 \FloatBarrier
 
 ::: {.callout-note appearance="minimal" icon="false"}
-**What impact on poverty rates (according to Eurostat) ?**
+
+What impact on poverty rates (according to Eurostat) ?
 
 In the European Union, monetary poverty is defined as belonging to a Household whose living standard
 (in euros or national currency) is below 60% of the median (national) living standard. The indicator
