@@ -1,4 +1,4 @@
-# init ----------------
+
 if(!"ggflags" %in% installed.packages()){devtools::install_github('rensa/ggflags')}
 
 library(tidyverse)
@@ -16,8 +16,6 @@ library(glue)
 library(showtext)
 
 sysfonts::font_add_google('Nunito')
-showtext_opts(dpi = 600)
-showtext::showtext_auto()
 
 outcome_sorted <- qs::qread("data/outcome_sorted.qs")
 inf_sorted <- qs::qread("data/inf_sorted.qs")
@@ -26,7 +24,7 @@ coicops <- qs::qread("data/coicops.qs", nthreads = 4) |>
 all_coicop <- qs::qread("data/all_coicop.qs", nthreads = 4)
 eucountries <- setdiff(eurostat::eu_countries$code, "UK")
 
-png_w <- 16
+png_w <- 15
 png_h <- 20
 
 dmax <- inf_sorted |>
@@ -191,7 +189,7 @@ g_wiu <- map(1:3, ~{
     scale_y_continuous(limits=c(-0.1,0.45), name="Increase in price since Feb. 22", oob=scales::oob_squish) +
     ggrepel::geom_text_repel(
       aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
-      size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+      size=4/.pt, segment.size=0.1, min.segment.length = 0, 
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     facet_wrap_paginate(vars(geo_f),  nrow=3, ncol=3, page = .x)
   graph2png(gg, file="depuis_wiu_{.x}" |> glue::glue(), width = png_w, height = png_h, dpi=600)
@@ -206,10 +204,7 @@ g_wiu_NLD <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu, geo=="NL"
             aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1), 
             size=0.01, col="white", show.legend=TRUE)+
   theme_ofce(base_size = 9)+
-  theme(plot.margin = margin(12,12,12,12,"pt"), panel.spacing = unit(6,"pt"),
-        legend.position = "bottom", legend.key.size = unit(8, "pt"), legend.text = element_text(size=rel(0.7)),
-        axis.text = element_text(size = rel(0.5)), axis.line = element_line(size=unit(0.1, "pt")),
-        axis.ticks.length = unit(0.5,"pt"), axis.ticks = element_line(size=unit(0.1, "pt")))+
+  theme(legend.position = "bottom", legend.key.size = unit(8, "pt"))+
   guides(color=guide_legend(ncol=3, nrow=4))+
   scale_color_manual(labels = coicops$short_label2,
                      values = coicops |> pull(color, name = coicop), 
@@ -224,8 +219,9 @@ g_wiu_NLD <- ggplot(inf_sorted |> filter(d==dmax$dmax, ref==since_wiu, geo=="NL"
   scale_x_continuous(limits=c(0,1),name="Cumulative weight in HICP", labels=scales::label_percent(1))+
   scale_y_continuous(limits=c(-0.1,0.45), name="Increase in price since Feb. 22", oob=scales::oob_squish) +
   ggrepel::geom_text_repel(
+    data = ~filter(.x, coicop_digit==3),
     aes(label=label_i, color = coicop1, x=(xmin+xmax)/2, y=0), 
-    size=rel(0.9), segment.size=0.1, min.segment.length = 0, 
+    size=4/.pt, segment.size=0.1, min.segment.length = 0, 
     max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)
 
 graph2png(g_wiu_NLD, file="depuis_wiu_NLD" |> glue::glue(), width = png_w, height = png_h, dpi=600)
@@ -369,7 +365,7 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
         axis.ticks.y = element_blank(),
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
-  labs(title = "Impact on quintile income of invasion of Ukraine",
+  labs(title = NULL,
        subtitle = str_c("Oils and fat, cereals, fuels for transportation and heating",
                         "from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
        caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for the selected products.",
@@ -394,13 +390,15 @@ quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::count
         axis.ticks.y = element_blank(),
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
-  labs(title = "Impact par quintile sur le revenu de la hausse des prix depuis l'invasion de l'Ukraine",
-       subtitle = str_c("Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage",
-                        "de février 2022 à avril 2022" |> glue(), sep="\n"),
+  labs(title = NULL,
+       subtitle = NULL,
        caption = str_c("Note: L'impact sur chaque quintile est en % du revenu du quintinle  pour chque catégorie de produit (88 produits COICOP).",
-                       "L'impact ets la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
+                       "L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
+                       "Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage,",
+                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722.",
+                       "De février 2022 à avril 2022.",
                        "Source: Eurostat HICP et revenus par quintile",
-                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722", sep="\n"))
+                       sep="\n"))
 
 graph2svg(quantiles1et5)
 graph2svg(quantiles1et5.fr)
@@ -437,7 +435,7 @@ graph2png(quantiles1et5, file="q1q5 pres", width = 25, height = 16, dpi=600)
 #         axis.ticks.y = element_blank(),
 #         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
 #   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
-#   # labs(title = str_c("Impact on quintile income of invasion of Ukraine {month(since,TRUE, FALSE,'en')} {year(since)}" |> glue(),
+#   # labs(title = str_c("Impact on quintile income of invasion of Ukraine {month(since,TRUE, FALSE,'en_US.UTF-8')} {year(since)}" |> glue(),
 #   #                    "plus {closest_state} months"),
 #   #      subtitle = str_c("Oils and fat, cereals, fuels for transportation and heating"),
 #   #      caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for the selected products.",
@@ -489,7 +487,7 @@ outcomeQ1Q5 <- outcome_sorted |>
   rename(qs_Q1 = q_Q1_1y,
          qs_Q5 = q_Q5_1y) |> 
   select(-starts_with("q_"))
-table_index <- distinct(inf_sorted, geo) |> pull(geo) |> sort() |> ksplit(5)
+table_index <- distinct(inf_sorted, geo) |> pull(geo) |> sort() |> ksplit(6)
 cts <- imap(table_index, ~{
   ## data ----------------------
   countries_table <- inf_sorted |>
@@ -503,7 +501,10 @@ cts <- imap(table_index, ~{
     ungroup() |> 
     select(-coicop_digit) |> 
     mutate(ipm = i * pm) |> 
-    pivot_wider(id_cols = c(coicop, geo_f, geo), names_from=c(d,ref), values_from = c(i, ipm, pm), names_glue = "{.value}_{ref}") |>  
+    pivot_wider(id_cols = c(coicop, geo_f, geo),
+                names_from=c(d,ref),
+                values_from = c(i, ipm, pm), 
+                names_glue = "{.value}_{ref}") |>  
     rename(pm = pm_1y) |> select(-pm_wiu) |> 
     left_join(all_coicop |> select(coicop=coicop3, l3), by="coicop") |> 
     mutate(l3 = if_else(is.na(l3), "Total", l3)) |> 
@@ -512,7 +513,7 @@ cts <- imap(table_index, ~{
     mutate(flag = localflag(geo),
            l3 = str_c(coicop, ": ", l3)) |> 
     select(l3, geo_f,  i_1y, i_wiu, ipm_1y, ipm_wiu, o_Q1_wiu, o_Q5_wiu, pm, qs_Q1, qs_Q5) |> 
-    filter(ipm_wiu >= 0.001 | rank(-ipm_wiu)<=5) |> 
+    filter(ipm_wiu >= 0.002 | rank(-ipm_wiu)<=5) |> 
     mutate(
       l3 = str_remove(l3, "CP"),
       l3 = if_else(str_length(l3)>32, str_c(str_sub(l3, 1,29), "..."), l3)) |> 
@@ -546,6 +547,6 @@ cts <- imap(table_index, ~{
 save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, 
      str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, str_to,
      since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
-     coicops,
+     coicops, to_date_wiu,
      file="data/sorties.rdata")
 
