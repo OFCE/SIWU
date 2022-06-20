@@ -1,7 +1,7 @@
 ---
 title: "Social Impact of the War in Ukraine"
 author: "Guillaume Allègre, François Geerolf, Xavier Timbeau"
-date: '2022-06-17'
+date: '2022-06-20'
 abstract: |
     Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/SIWU>. Updated with HICP release 17/06/2022.
 format:
@@ -73,7 +73,7 @@ purchasing power in the short run.
 
 ## Main channels
 
-The main channel that we identify, concerning the social impact of the War, is the rise in the
+The main channel that we identify, concerning the social impact of the war in Ukraine, is the rise in the
 prices of consumer goods or services linked to actual or anticipated interruptions in the delivery
 of certain products imported from Russia or Ukraine. These products are mainly crude oil, gas,
 certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. There are
@@ -384,7 +384,7 @@ measures (notably, an exemption that decreased electricity prices by 35% on aver
 April). It is also noticeable that households in the first income quintile tend to be more affected
 (before eventual governmental transfers), in percentage of income. This is not surprising: poorer
 households tend to consume more energy and food as a share of income. Poorer households, from the
-first quintile, are most hit in Greece, Netherlands, Lithuania. This is due mostly to housing
+first quintile, are most hit in Greece, the Netherlands, Lithuania. This is due mostly to housing
 expenses in the Netherlands, but food also plays a role in Greece and Lithuania. The next Figure
 confirms this conclusion. We can clearly see that for all countries (except Slovenia), the impact on
 households from the first quintile (Q1) is greater than for the richest households (Q5). This is
@@ -400,29 +400,29 @@ from energy and food price volatility.
 
 What impact on poverty rates (according to Eurostat) ?
 
-In the European Union, monetary poverty is defined as belonging to a Household whose living standard
+In the European Union, monetary poverty is defined as belonging to a household whose living standard
 (in euros or national currency) is below 60% of the median (national) living standard. The indicator
-is said to be relative: it depends on the relative position of a Household in the entire living
+is said to be relative: it depends on the relative position of a household in the entire living
 standard distribution. One advantage of this indicator is its simplicity: one only needs to know the
 disposable income (after tax and social transfers) of a representative sample of households
-(EU-SILC). Due to controversies around this monetary indicator, Eurostat names this indicator "at
+(EU-SILC). This monetary indicator is not uncontroversial however, so that Eurostat cautiously names this indicator "at
 risk of poverty rate".
 
 The analysis presented here could deepen the controversy around the monetary indicator. Since the
 indicator only looks at income, it does not take into account differential inflation for poorer and
 richer households. If poor and rich households have different consumption baskets (poorer households
-consume relatively more transport, heating, and food), asymmetric inflation as we have seen
+consume relatively more transportation, heating, and food), asymmetric inflation as we have seen
 following the Ukrainian invasion (which affected heating, transport and food disproportionally) will
 have different impact on the real living standard of poor and rich households, even if income levels
 are stable. This impact will not be shown in the indicator. Also, equivalent policies could have
 different impacts on the monetary poverty rate: a social tariff will generally not be reflected in
 the poverty rate, while a social cheque will lower the poverty rate. Therefore, there could be a
 paradoxical decrease in the at-risk-of-poverty rate in 2021/2022 if differential increases in prices
-are not reflected in the indicator, but social cheques are (since they are included in income.
+are not reflected in the indicator, but social cheques are (since these are included in income).
 
 This is a well-known limit of this indicator which only reflects income, and not needs. To respond
 to this limitation, Eurostat added a second indicator, using Material and Social Deprivation
-approach. In this latter approach, which is gaining weight, a person is in deprivation if he/she
+approach. In this latter approach, which is gaining traction, a person is in deprivation if he/she
 declares that he/she does not have sufficient financial resources to access a certain number of
 goods and services, considered necessary for decent living conditions in Europe (from 'being unable
 to keep one's home adequately warm', to 'afford an internet connection' or 'a car for personal use',
@@ -432,13 +432,13 @@ Union", chances are that you will click on a study that uses a third indicator: 
 and social exclusion", which is quietly becoming the main indicator of poverty in the European
 Union. Are poor according to this indicator, individuals who are poor according to either one of the
 two indicators (monetary or deprivation). This represents around 22% of the EU population (35% in
-Romania, 12% in Czechia). The advantage of this indicator is that it is likely to go up when prices
-increases, and the living standard of the poor decreases). It also has an absolute component: if all
-income go down, deprivation goes up and poverty also goes up, which is in line with a certain common
-sense / intuition (poverty usually has both an absolute and relative component in its common
+Romania, 12% in Czechia). One notable advantage of this indicator is that it is likely to go up when prices
+increases, and the living standard of the poor decreases. This indicator also has an absolute component: if all
+incomes go down, deprivation goes up and poverty also goes up, which is in line with common
+sense and intuition (poverty usually has both an absolute and relative component in its common
 acceptation).
 
-There are other problems: deprivation can only be measured through a survey and is therefore not as
+There are other problems: deprivation can only be measured through surveys and is therefore not as
 predictable as income (it is easier for a forecaster to predict income than how people will answer a
 survey). Also, the way people answer surveys might differ across countries and time (for the same
 budget and prices): it is a subjective measure. Also, being able to afford a personal car might seen
