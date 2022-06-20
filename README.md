@@ -4,17 +4,17 @@
 
 ### last update
 
-HICP update 17/6/2022 [Social Impact of the War in Ukraine](report/SIWU_brief_june_22.pdf)
+HICP update June 17, 2022 [Social Impact of the War in Ukraine](report/SIWU_brief_june_22.pdf)
 
 ### older versions
 
--   HICP update 18/5/2022 [Social Impact of the War in Ukraine](report/SIWU_brief_may_22.pdf)
+-   HICP update May 18, 2022 [Social Impact of the War in Ukraine](report/SIWU_brief_may_22.pdf)
 
 ## Aim
 
-This repo contains code, data and documents to reproduce a work done for the S&D group at the European Parliament. Using data from Eurostat HICP per coicop at the level 92 and data from Eurostat on consumption share (of income) per quintile and coicop (at the level 38) we evaluate what is the impact of recent price increases on income per quintile.
+This repo contains code, data and documents to replicate some work done for the S&D group at the European Parliament. Using data from Eurostat HICP per coicop at the level 92 and data from Eurostat on consumption share (of income) per quintile and coicop (at the level 38) we evaluate what is the impact of recent price increases on income per quintile.
 
-Data on HICP is updated every month (plus a flash estimate in between). Data on quintile consumption share is available for the year 2015 (except Italy, for which data is available in 2005).
+Data on HICP is updated every month (with a flash estimate in between). Data on quintile consumption share is available for year 2015 (except in Italy, for which data is available in 2005).
 
 ## Tranformation of data
 
