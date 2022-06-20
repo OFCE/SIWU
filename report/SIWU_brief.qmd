@@ -66,9 +66,7 @@ options(ofce.base_size = 7)
 
 # Social Impact of War in Ukraine brief
 
-The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
-cohesion in Europe. The response operates in multiple dimensions, and we propose to analyse the
-direct consequences of the invasion on the daily lives of Europeans in the short term.
+The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution of Europeans' purchasing power in the short run.
 
 ## Main channels
 
@@ -79,7 +77,7 @@ certain cereals or oil seeds, nitrogen fertilizers and other products used in in
 generally substitutes (of origin or nature) for these products, but the rigidity of supply chains
 and/or production capacities have led to a rise in prices since (and before) the war started. The
 partial exclusion of Russia from the Western financial system and the prospect of an embargo
-extending to gas supplies amplifies the price movement. Evidently, an embargo would amplify it
+extending to gas supplies amplifies the price movements. Evidently, an embargo would amplify it
 further, with large impacts on prices, and probably also volumes (via quotas).
 
 These price hikes are cascaded down to end consumers in the European Union. The price of gasoline at
