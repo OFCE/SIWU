@@ -48,7 +48,7 @@ R sources files are in the `R` folder.
 
 A check is done each time you run `make ISGU data.r`, to assess if there is an update of Eurostat data and download the latest version of data. No history or versionning of datasets from Eurostat is kept.
 
-`graphiques.r` is producing the graphs which are saved (mostly as `png` and `svg`) in the folder `svg` plus the annex tables.
+`graphiques.r` is producing the graphs which are saved (mostly as `png` and `svg`) in the folder `svg` plus the annex tables. It produces the `sorties.Rdata` necessary to run the `SIWU_brief.qmd`.  
 
 `nrg_bal.r` produces the table 1 of the report using data from Eurostat on energy balances.
 

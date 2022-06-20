@@ -1,4 +1,6 @@
 # init ----------------
+if(!"ggflags" %in% installed.packages()){devtools::install_github('rensa/ggflags')}
+
 library(tidyverse)
 library(eurostat)
 library(ofce)
@@ -8,6 +10,7 @@ library(ggforce)
 library(RColorBrewer)
 library(colorspace)
 library(ggflags)
+library(ragg)
 library(paletteer)
 library(glue)
 library(showtext)
@@ -273,7 +276,7 @@ gql1 <- imap(1:3, ~{
     guides(fill=guide_legend(ncol=3, nrow=4))+
     labs(title="Impact on income per quintile of income since war in Ukraine",
          subtitle=str_c("% of quintile income", 
-                        "from {month(since_wiu,TRUE, FALSE, 'en')} to {month(to_date_wiu,TRUE, FALSE, 'en')} {year(to_date_wiu)}",
+                        "from {month(since_wiu,TRUE, FALSE, 'en_US.UTF-8')} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date_wiu)}",
                         "subfig {.y}.", sep="\n") |> glue(),
          caption=str_c("Sources: Eurostat HICP, consumption per quintile (hbs_str_t223), consumtion per cociop (hbs_str_t211),",
                        "income and expenditure per quintile (icw_res_02)", sep="\n"))
@@ -303,7 +306,7 @@ gql1_1y <- imap(1:3, ~{
     guides(fill=guide_legend(ncol=3, nrow=4))+
     labs(title="Impact on income per quintile of income since war in Ukraine",
          subtitle=str_c("% of quintile income", 
-                        "from {month(since_1y,TRUE, FALSE, 'en')} to {month(to_date_wiu,TRUE, FALSE, 'en')} {year(to_date_wiu)}",
+                        "from {month(since_1y,TRUE, FALSE, 'en_US.UTF-8')} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date_wiu)}",
                         "subfig {.y}.", sep="\n") |> glue(),
          caption=str_c("Sources: Eurostat HICP, consumption per quintile (hbs_str_t223), consumtion per cociop (hbs_str_t211),",
                        "income and expenditure per quintile (icw_res_02)", sep="\n"))
@@ -332,7 +335,7 @@ gql1_nld <- ggplot(outcome_sorted |> filter(d==dmax_o$dmax, ref==since_wiu, geo=
   guides(fill=guide_legend(ncol=3, nrow=4))+
   labs(title="Impact on income per quintile of income since war in Ukraine ofr The Netherlands",
        subtitle=str_c("% of quintile income", 
-                      "from {month(since_wiu,TRUE, FALSE, 'en')} to {month(to_date_wiu,TRUE, FALSE, 'en')} {year(to_date_wiu)}",
+                      "from {month(since_wiu,TRUE, FALSE, 'en_US.UTF-8')} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date_wiu)}",
                       "subfig NL.", sep="\n") |> glue(),
        caption=str_c("Sources: Eurostat HICP, consumption per quintile (hbs_str_t223), consumtion per cociop (hbs_str_t211),",
                      "income and expenditure per quintile (icw_res_02)", sep="\n"))
@@ -368,7 +371,7 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
   labs(title = "Impact on quintile income of invasion of Ukraine",
        subtitle = str_c("Oils and fat, cereals, fuels for transportation and heating",
-                        "from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en')} {year(to_date)}" |> glue(), sep="\n"),
+                        "from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
        caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for the selected products.",
                        "Impact is the sum of mothly impacts divided by the sum of monthly income over the considered months.",
                        "Slovenia has exempted from energy bill a part of the population in jan and feb 2022 (see companion text for details)",
