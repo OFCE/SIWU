@@ -66,7 +66,10 @@ options(ofce.base_size = 7)
 
 # Social Impact of War in Ukraine brief
 
-The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution of Europeans' purchasing power in the short run.
+The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great cohesion 
+in Europe. The response operates over multiple dimensions, and we propose to analyse the economic and 
+social consequences of the war in Ukraine. To that end, we shall focus on the evolution of Europeans' 
+purchasing power in the short run.
 
 ## Main channels
 
@@ -91,21 +94,20 @@ However, subsidies or price regulations can prevent the price hikes cascades.
 
 Our methodology is as follows:
 
-1.  We identify the prices that have experienced a significant increase between several dates,
-    mainly between February and April, 2022, which can be attributed to the invasion of Ukraine. We
-    use Eurostat's HICP at the finest level of disaggregation according to the COICOP nomenclature
+1.  We first identify the prices that have experienced a significant increase between several dates,
+    mainly between February and April, 2022, which can then be attributed to the invasion of Ukraine. We
+    use Eurostat's HICP at the finest possible level of disaggregation according to the COICOP nomenclature
     to distinguish price increases in (notably) energy, food, housing and transport (next update 17
     June 2022),
-2.  We use Eurostat's Household Budget Surveys (HBS 2015) to identify the structure of consumption
+2.  We then use Eurostat's Household Budget Surveys (HBS 2015) to identify the structure of consumption
     by income quintile (using hbs_str_t223 database).
 3.  We then estimate the impact of price hikes in euros and in % of income by income quintile for
     each of the member states of the Union and per product identified using HICP from Eurostat, from
-    which seasonal patterns are removed[^1] (allowing monthly analysis).
+    which seasonal patterns are removed[^1] (allowing for monthly analysis).
 4.  We offer an analysis and visualization of the information. Updated and complementary data are
     accessible at <https://ofce.shinyapps.io/siwu/>.
 
-[^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from Bureau of
-    Census.
+[^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from the Census Bureau.
 
 # Context
 
@@ -171,7 +173,7 @@ g
 However, gas is not used in small islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%)
 and Finland (0,5%), who use mostly derived heat and electricity (see @fig-nrg). On the other hand,
 gas represents the majority of energy in housing in the Netherlands (69,3%) and Italy (51,8%).
-Although, the need of energy might differ between nations, especially for heating purposes due to
+Also, the need of energy might differ between nations, especially for heating purposes due to
 climate and thermal efficiency of housings: households in Malta, Portugal, Spain and Cyprus use far
 less energy than in Luxembourg, Austria and Denmark. Likewise, passenger mobility differs between
 Italy, Norway, Finland, Germany, France (above 13 000 km per capita per year) on one hand, and
@@ -202,7 +204,7 @@ There is a trend towards more variable-price contracts, especially in countries 
 Slovenia, Ireland, Spain, Belgium, Czech Republic and the Netherlands: in these countries, more than
 50% of consumers have variable-pricing gas contracts. In Belgium, suppliers have the right to index
 their variable gas and electricity prices monthly and use the indexing parameters of their choice
-(of course, their interest is to link it directly to their wholesale price so that they do not take
+(of course, they might wish to link it directly to their wholesale price so that they do not take
 any market risk). The government justified the decision in the objective to "bring the bill closer
 to the market reality". However, if demand is relatively inelastic in the short-term, this
 price-liberalisation increases volatility and risk for countries that produce gas as well as, and
