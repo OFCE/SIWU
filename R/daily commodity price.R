@@ -42,7 +42,7 @@ daily <- daily_raw |>
       com=="coalmwh" ~ "Coal, ICE Newcastle",
       com=="coal" ~ "Coal, ICE Newcastle"),
     com = str_remove(com, "mwh"))
-
+br <- paletteer::paletteer_d("miscpalettes::pastel")
 (comday <- ggplot(daily |> filter(unit == "€/MWh")) +
   geom_vline(xintercept=ymd("2022-02-24"), size = 0.2, col="gray25") +
   geom_line(aes(x=date, y=price, col=label)) + 
@@ -58,11 +58,10 @@ daily <- daily_raw |>
                limits = c(ymd("2021-01-01", NA)),
                expand = expansion(mult=0.01))+
   labs(color = "Commodity") + xlab(NULL) + ylab(NULL) +
-  scale_color_manual(values = c(br[4], "gray50", br[5]))+
+  scale_color_manual(values = c("firebrick4", "gray20", "dodgerblue2", "deepskyblue1", "steelblue2"))+
   theme_ofce()+
   theme(legend.position = c(0.01, 0.99),
         legend.justification = c(0,1))) 
-
 
 graph2svg(comday, width=25, ratio=16/9)
 graph2png(comday, width=25, ratio=16/9, dpi = 600)
