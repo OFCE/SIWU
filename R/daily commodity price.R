@@ -47,8 +47,8 @@ br <- paletteer::paletteer_d("miscpalettes::pastel")
   geom_vline(xintercept=ymd("2022-02-24"), size = 0.2, col="gray25") +
   geom_line(aes(x=date, y=price, col=label)) + 
   scale_y_log10(
-    breaks = c(5, 10, 25, 50, 75, 100),
-    minor_breaks = scales::log_breaks(16), 
+    breaks = c(5, 10, 25, 50, 75, 100, 200),
+    minor_breaks = seq(0,250, 5), 
     guide = "axis_minor",
     sec.axis=sec_axis(
       trans = ~.x, 
@@ -62,7 +62,7 @@ br <- paletteer::paletteer_d("miscpalettes::pastel")
   theme_ofce()+
   theme(legend.position = c(0.01, 0.99),
         legend.justification = c(0,1))) 
-
+plotly::ggplotly(comday)
 graph2svg(comday, width=25, ratio=16/9)
 graph2png(comday, width=25, ratio=16/9, dpi = 600)
 
