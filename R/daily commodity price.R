@@ -66,12 +66,12 @@ plotly::ggplotly(comday)
 graph2svg(comday, width=25, ratio=16/9)
 graph2png(comday, width=25, ratio=16/9, dpi = 600)
 
-graphs <- list(
-  dygraph(data.xts[, c("TTF", "NGF")], main="Natural Gas (EU TTF, US NFG)", group="fossils") |>
-    dyOptions(colors = c(br[4], br[8])) |> 
-    dyAxis("y", logscale=TRUE),
-  dygraph(data.xts$BZE, main="Oil (brent)", group="fossils") |> dyOptions(colors = "gray40") |> dyAxis("y", logscale=TRUE) ,
-  dygraph(data.xts$API4E, main="Coal (API4E)", group="fossils") |> dyOptions(colors = br[5]) |> dyAxis("y", logscale=TRUE))
-
-htmltools::browsable(htmltools::tagList(graphs))
-
+# graphs <- list(
+#   dygraph(data.xts[, c("TTF", "NGF")], main="Natural Gas (EU TTF, US NFG)", group="fossils") |>
+#     dyOptions(colors = c(br[4], br[8])) |> 
+#     dyAxis("y", logscale=TRUE),
+#   dygraph(data.xts$BZE, main="Oil (brent)", group="fossils") |> dyOptions(colors = "gray40") |> dyAxis("y", logscale=TRUE) ,
+#   dygraph(data.xts$API4E, main="Coal (API4E)", group="fossils") |> dyOptions(colors = br[5]) |> dyAxis("y", logscale=TRUE))
+# 
+# htmltools::browsable(htmltools::tagList(graphs))
+# 
