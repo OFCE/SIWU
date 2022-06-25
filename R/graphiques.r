@@ -1,5 +1,6 @@
-# init ----------------
-#setwd("SIWU")
+
+if(!"ggflags" %in% installed.packages()){devtools::install_github('rensa/ggflags')}
+
 library(tidyverse)
 library(eurostat)
 library(ofce)
@@ -9,6 +10,7 @@ library(ggforce)
 library(RColorBrewer)
 library(colorspace)
 library(ggflags)
+library(ragg)
 library(paletteer)
 library(glue)
 library(showtext)

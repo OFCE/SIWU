@@ -149,11 +149,11 @@ inf_1 <- prc_hicp_midx  |>
 future::plan("multisession", workers = 8)
 start <- ym("2020 01")
 end <- max(inf_1$time)
-inff <- furrr::future_map_dfr(1:(interval(start,end)%/%months(1)), function(b) {
-  base <- start + months(b-1)
+inff <- furrr::future_map_dfr(1:(lubridate::interval(start,end)%/%months(1)), function(b) {
+  base <- start + lubridate:::months.numeric(b-1)
   if(base==end) return(NULL)
-  dmax <- interval(base, end) %/% months(1)
-  dates <- base + months(1:dmax)
+  dmax <- lubridate::interval(base, end) %/% lubridate:::months.numeric(1)
+  dates <- base + lubridate:::months.numeric(1:dmax)
   inf_1 |> 
     summarize(
       d = 1:dmax,
@@ -258,7 +258,7 @@ outcome_sorted <-  outcome_g_q_c |>
   left_join(coicop_colors, by="coicop") |> 
   mutate(geo_f = factor(geo, levels = countries, labels = countries_l, ordered=TRUE),
          coicop1 = str_sub(coicop, 1,4),
-         time = ref + months(d),
+         time = ref + lubridate:::months.numeric(d),
          coicop = factor(coicop),
          coicop1 = factor(coicop1),
          coicop2 = factor(coicop2),
@@ -279,7 +279,7 @@ inf_sorted <-  inflation_g_c |>
          ripm = rank(-imd*pm),
          label_i = if_else(imd>=0.1 & ri<=5, coicop, ""),
          label_ipm = if_else(imd*pm>=0.001 & ripm<=5, coicop, ""),
-         time = ref + months(d),
+         time = ref + lubridate:::months.numeric(d),
          coicop = factor(coicop),
          coicop1 = factor(coicop1),
          coicop2 = factor(coicop2),
