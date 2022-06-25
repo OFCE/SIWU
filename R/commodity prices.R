@@ -13,7 +13,6 @@ library(ggh4x)
 library(showtext)
 
 sysfonts::font_add_google('Nunito')
-showtext_opts(dpi = 600)
 showtext::showtext_auto()
 
 # la source des données de prix est la banque mondiale
@@ -95,7 +94,7 @@ selected <-
     "BEEF", "food",
     "COAL_AUS", "nrg",
     "COPPER", "fer",
-    "CRUDE_DUBAI", "nrg",
+    "CRUDE_BRENT", "nrg",
     "GOLD", "fer",
     "NGAS_EUR", "nrg",
     "WHEAT_US_HRW", "food",
@@ -176,6 +175,30 @@ gcom <- ggplot(CMOr |> filter(type!="unknown"))+
   theme_ofce(base_size = 9, base_family = "Nunito")+
   scale_x_date(guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.y = element_text(size=rel(0.75)))
+
+goil <- ggplot(CMOr |> filter(variable=="Crude oil, Brent"))+
+  geom_line(aes(x=time, y=pcom_real, color=type), show.legend = FALSE, size=0.25)+
+  scale_y_log10(breaks = scales::log_breaks(10), minor_breaks = scales::log_breaks(16), guide = "axis_minor")+
+  geom_text(data=CMOd |> filter(variable=="Crude oil, Brent"), 
+            aes(x=ymd("2022-01-01"), y=18, label=last_text, color= type), 
+            hjust=1, vjust=1, size=2, show.legend=FALSE)+
+  scale_color_manual(values = c(food = cocol[["CP01"]], nrg = cocol[["CP07"]], fer = cocol[["CP05"]]))+
+  xlab(NULL)+ylab(NULL)+
+  facet_wrap(vars(variable), ncol = 4)+
+  labs(
+    title = "Real price for a selection of commodities",
+    subtitle = "France exchange and inflation rate (see note), 100 for year 2018, log scale (base 10)",
+    caption = 
+      str_c(
+        "Last data point for {ld_str}" |> glue::glue(),
+        "Sources : World Bank Commodity Markets (www.worldbank.org/en/research/commodity-markets)",
+        "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index for France",
+        "OECD EO110 for exhange rate FRA/USD, EUR/USD", sep="\n"))+
+  theme_ofce(base_size = 9, base_family = "Nunito")+
+  scale_x_date(guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y") +
+  theme(axis.text.y = element_text(size=rel(0.75)))+
+  geom_hline(yintercept = 120+100, color= "orange", size = 0.5)
+graph2png(goil)
 
 graph2svg(gcom)
 graph2png(gcom, width = 16, height = 23, dpi=600)

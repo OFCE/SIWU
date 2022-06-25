@@ -212,7 +212,7 @@ Union through volumes, but also through prices. Despite price convergence due to
 towards liberalisation and a single European energy market, national utilities and consumers face
 different prices depending on the contracts signed with suppliers.
 
-![Energy final consumtion per capita by vector](../svg/tab1.png){#fig-nrg}
+![Energy final consumption per capita by vector](../svg/tab1.png){#fig-nrg}
 
 Most European countries have gone from oil-indexation to gas-indexation in the long-term contracts
 signed with gas suppliers. In the European Union, oil-indexation represented nearly 80% of contracts
