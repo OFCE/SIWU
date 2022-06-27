@@ -336,6 +336,7 @@ gql1_nld <- ggplot(outcome_sorted |> filter(d==dmax_o$dmax, ref==since_wiu, geo=
        caption=str_c("Sources: Eurostat HICP, consumption per quintile (hbs_str_t223), consumtion per cociop (hbs_str_t211),",
                      "income and expenditure per quintile (icw_res_02)", sep="\n"))
 graph2png(gql1_nld, file = "coicop_l1_wiu_NLD" |> glue::glue(), width = png_w, height = png_h, dpi=600)
+
 # quintiles simplifiés ------------------------
 data <- outcome_sorted |> 
   filter(d==dmax_o$dmax, ref==since_wiu) |> 
@@ -547,6 +548,5 @@ cts <- imap(table_index, ~{
 save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts, 
      str_wiu, str_1y, dmax, dmax_o, dmaxx, dmaxx_o, str_to,
      since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
-     coicops, to_date_wiu,
+     coicops, to_date_wiu, data,
      file="data/sorties.rdata")
-
