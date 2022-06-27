@@ -66,20 +66,20 @@ options(ofce.base_size = 7)
 
 # Social Impact of War in Ukraine brief
 
-The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great cohesion 
-in Europe. The response operates over multiple dimensions, and we propose to analyse the economic and 
-social consequences of the war in Ukraine. To that end, we shall focus on the evolution of Europeans' 
-purchasing power in the short run.
+The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
+cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the
+economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution
+of Europeans' purchasing power in the short run.
 
 ## Main channels
 
-The main channel that we identify, concerning the social impact of the war in Ukraine, is the rise in the
-prices of consumer goods or services linked to actual or anticipated interruptions in the delivery
-of certain products imported from Russia or Ukraine. These products are mainly crude oil, gas,
-certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. There are
-generally substitutes (of origin or nature) for these products, but the rigidity of supply chains
-and/or production capacities have led to a rise in prices since (and before) the war started. The
-partial exclusion of Russia from the Western financial system and the prospect of an embargo
+The main channel that we identify, concerning the social impact of the war in Ukraine, is the rise
+in the prices of consumer goods or services linked to actual or anticipated interruptions in the
+delivery of certain products imported from Russia or Ukraine. These products are mainly crude oil,
+gas, certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. There
+are generally substitutes (of origin or nature) for these products, but the rigidity of supply
+chains and/or production capacities have led to a rise in prices since (and before) the war started.
+The partial exclusion of Russia from the Western financial system and the prospect of an embargo
 extending to gas supplies amplifies the price movements. Evidently, an embargo would amplify it
 further, with large impacts on prices, and probably also volumes (via quotas).
 
@@ -90,24 +90,47 @@ introduce inertia or an absence of transmission. Other prices can increase in ca
 electricity through indexation or price formation as for the single market for gas or electricity.
 However, subsidies or price regulations can prevent the price hikes cascades.
 
+Duee to lack of data or clear estimation of mechanisms, we don't take in account 3 important
+channels.
+
+-   The first one is the response of government to compensate price increases when not directly
+    acting on prices. Exceptional checks, increases in allowances or income are note accounted for.
+    Data provision on this matter by Eurostat in a standardised format would be very useful.
+
+-   We don't take in account expected increase in future prices due to known indexation mechanisms.
+    For instance, in sme countries, rents are reeavaluated on an index which is calculated using
+    prices of certain goods or services.
+
+-   We don't take in account increases in wages or other components of income that could increase in
+    the future due to price increase. Some of those indexation are explicit in private contracts or
+    mandatory through general law, depending on the country and the source of income. Some increases
+    are going to occur due to non explicit market mechanism and negociations between economic
+    agents. Here also, there is a clear lack of standardized information about country and source of
+    income heterogeneity. Years of low inflation may be a explanation for this poor documentation of
+    essential short term mechanism, but the surge of prices increases points the urgent need for a
+    comprehensive collection of this information, in order to forecast future evolution of
+    purchasing power and redistributive effects caused by increases of prices, being a general
+    increase in price or located on a few products.
+
 ## Methodology
 
 Our methodology is as follows:
 
 1.  We first identify the prices that have experienced a significant increase between several dates,
-    mainly between February and April, 2022, which can then be attributed to the invasion of Ukraine. We
-    use Eurostat's HICP at the finest possible level of disaggregation according to the COICOP nomenclature
-    to distinguish price increases in (notably) energy, food, housing and transport (next update 17
-    June 2022),
-2.  We then use Eurostat's Household Budget Surveys (HBS 2015) to identify the structure of consumption
-    by income quintile (using hbs_str_t223 database).
+    mainly between February and April, 2022, which can then be attributed to the invasion of
+    Ukraine. We use Eurostat's HICP at the finest possible level of disaggregation according to the
+    COICOP nomenclature to distinguish price increases in (notably) energy, food, housing and
+    transport (next update 17 June 2022),
+2.  We then use Eurostat's Household Budget Surveys (HBS 2015) to identify the structure of
+    consumption by income quintile (using hbs_str_t223 database).
 3.  We then estimate the impact of price hikes in euros and in % of income by income quintile for
     each of the member states of the Union and per product identified using HICP from Eurostat, from
     which seasonal patterns are removed[^1] (allowing for monthly analysis).
 4.  We offer an analysis and visualization of the information. Updated and complementary data are
     accessible at <https://ofce.shinyapps.io/siwu/>.
 
-[^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from the Census Bureau.
+[^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from the Census
+    Bureau.
 
 # Context
 
@@ -172,14 +195,14 @@ g
 
 However, gas is not used in small islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%)
 and Finland (0,5%), who use mostly derived heat and electricity (see @fig-nrg). On the other hand,
-gas represents the majority of energy in housing in the Netherlands (69,3%) and Italy (51,8%).
-Also, the need of energy might differ between nations, especially for heating purposes due to
-climate and thermal efficiency of housings: households in Malta, Portugal, Spain and Cyprus use far
-less energy than in Luxembourg, Austria and Denmark. Likewise, passenger mobility differs between
-Italy, Norway, Finland, Germany, France (above 13 000 km per capita per year) on one hand, and
-Romania and Slovakia (around 7 500 km/c/y)[^2]. Moreover, only 30% of travel distance in Romania is
-by car as driver against 63% in Italy. Some, but not all, of these differences can be attributed to
-income differences.
+gas represents the majority of energy in housing in the Netherlands (69,3%) and Italy (51,8%). Also,
+the need of energy might differ between nations, especially for heating purposes due to climate and
+thermal efficiency of housings: households in Malta, Portugal, Spain and Cyprus use far less energy
+than in Luxembourg, Austria and Denmark. Likewise, passenger mobility differs between Italy, Norway,
+Finland, Germany, France (above 13 000 km per capita per year) on one hand, and Romania and Slovakia
+(around 7 500 km/c/y)[^2]. Moreover, only 30% of travel distance in Romania is by car as driver
+against 63% in Italy. Some, but not all, of these differences can be attributed to income
+differences.
 
 [^2]: Odyssee-Mure:
     <https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html>
@@ -189,7 +212,7 @@ Union through volumes, but also through prices. Despite price convergence due to
 towards liberalisation and a single European energy market, national utilities and consumers face
 different prices depending on the contracts signed with suppliers.
 
-![Energy final consumtion per capita by vector](../svg/tab1.png){#fig-nrg}
+![Energy final consumption per capita by vector](../svg/tab1.png){#fig-nrg}
 
 Most European countries have gone from oil-indexation to gas-indexation in the long-term contracts
 signed with gas suppliers. In the European Union, oil-indexation represented nearly 80% of contracts
@@ -397,7 +420,6 @@ from energy and food price volatility.
 \FloatBarrier
 
 ::: {.callout-note appearance="minimal" icon="false"}
-
 What impact on poverty rates (according to Eurostat) ?
 
 In the European Union, monetary poverty is defined as belonging to a household whose living standard
@@ -405,8 +427,8 @@ In the European Union, monetary poverty is defined as belonging to a household w
 is said to be relative: it depends on the relative position of a household in the entire living
 standard distribution. One advantage of this indicator is its simplicity: one only needs to know the
 disposable income (after tax and social transfers) of a representative sample of households
-(EU-SILC). This monetary indicator is not uncontroversial however, so that Eurostat cautiously names this indicator "at
-risk of poverty rate".
+(EU-SILC). This monetary indicator is not uncontroversial however, so that Eurostat cautiously names
+this indicator "at risk of poverty rate".
 
 The analysis presented here could deepen the controversy around the monetary indicator. Since the
 indicator only looks at income, it does not take into account differential inflation for poorer and
@@ -432,11 +454,11 @@ Union", chances are that you will click on a study that uses a third indicator: 
 and social exclusion", which is quietly becoming the main indicator of poverty in the European
 Union. Are poor according to this indicator, individuals who are poor according to either one of the
 two indicators (monetary or deprivation). This represents around 22% of the EU population (35% in
-Romania, 12% in Czechia). One notable advantage of this indicator is that it is likely to go up when prices
-increases, and the living standard of the poor decreases. This indicator also has an absolute component: if all
-incomes go down, deprivation goes up and poverty also goes up, which is in line with common
-sense and intuition (poverty usually has both an absolute and relative component in its common
-acceptation).
+Romania, 12% in Czechia). One notable advantage of this indicator is that it is likely to go up when
+prices increases, and the living standard of the poor decreases. This indicator also has an absolute
+component: if all incomes go down, deprivation goes up and poverty also goes up, which is in line
+with common sense and intuition (poverty usually has both an absolute and relative component in its
+common acceptation).
 
 There are other problems: deprivation can only be measured through surveys and is therefore not as
 predictable as income (it is easier for a forecaster to predict income than how people will answer a
