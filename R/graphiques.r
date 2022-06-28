@@ -351,7 +351,7 @@ data <- outcome_sorted |>
   mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower())
 
 quantiles1et5 <- ggplot(data , aes(y=geo_f)) + 
-  geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
+  geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="gray80", alpha=0.5, size=3.5)+
   geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
   geom_point(aes(x=Q5), size=3.5, col="steelblue4") +
   geom_text(aes(x=Q1), label="Q1", size=6/.pt, col="white", fontface="bold" ) +

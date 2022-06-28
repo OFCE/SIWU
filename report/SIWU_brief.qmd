@@ -98,7 +98,7 @@ channels.
     Data provision on this matter by Eurostat in a standardised format would be very useful.
 
 -   We don't take in account expected increase in future prices due to known indexation mechanisms.
-    For instance, in sme countries, rents are reeavaluated on an index which is calculated using
+    For instance, in sme countries, rents are re-evaluated on an index which is calculated using
     prices of certain goods or services.
 
 -   We don't take in account increases in wages or other components of income that could increase in
