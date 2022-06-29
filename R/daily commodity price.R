@@ -55,12 +55,12 @@ br <- paletteer::paletteer_d("miscpalettes::pastel")
       breaks = daily |> filter(unit == "€/MWh", date==max(date)) |> pull(price),
       labels = \(x) str_c(round(x, 1), " €/MWh")))+
   scale_x_date(labels=scales::label_date_short(), 
-               limits = c(ymd("2021-01-01", NA)),
+               limits = c(ymd("2018-01-01", NA)),
                expand = expansion(mult=0.01))+
   labs(color = "Commodity") + xlab(NULL) + ylab(NULL) +
   scale_color_manual(values = c("firebrick4", "gray20", "dodgerblue2", "deepskyblue1", "steelblue2"))+
   theme_ofce()+
-  theme(legend.position = c(0.01, 0.99),
+  theme(legend.position = "bottom",
         legend.justification = c(0,1))) 
 plotly::ggplotly(comday)
 graph2svg(comday, width=25, ratio=16/9)
