@@ -343,19 +343,26 @@ data <- outcome_sorted |>
   select(geo_f, coicop, outcome, quantile, coicop_digit, geo) |> 
   filter(quantile%in%c("Q1", "Q5")) |>
   pivot_wider(names_from = quantile, values_from = outcome) |> 
-  filter(coicop %in% c("CP0111", "CP0115", "CP0451", "CP0452", "CP0453", "CP0454", "CP0722")) |> 
-  group_by(geo_f) |>
+  filter(coicop %in% c("CP0111", "CP0115", "CP0451", "CP0452", "CP0453", "CP0454", "CP0722", "CP00")) |> 
+  mutate(sub = if_else(coicop=="CP00", FALSE, TRUE)) |> 
+  group_by(geo_f, sub) |>
   summarise(across(c(Q1,Q5), ~sum(.x, na.rm=TRUE)), geo=first(geo)) |> 
   ungroup() |> 
-  mutate(geo_f = fct_reorder(geo_f, Q1)) |> 
-  mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower())
+   mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower()) |> 
+  ungroup() |> 
+  pivot_wider(id_col = c(geo_f, geo), names_from = sub, values_from = c(Q1,Q5)) |> 
+  rename_with(~str_replace(str_remove(.x, "_TRUE"), "_FALSE", "_t")) |> 
+  mutate(geo_f = fct_reorder(geo_f, Q1_t))
 
 quantiles1et5 <- ggplot(data , aes(y=geo_f)) + 
-  geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="gray80", alpha=0.5, size=3.5)+
-  geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
-  geom_point(aes(x=Q5), size=3.5, col="steelblue4") +
-  geom_text(aes(x=Q1), label="Q1", size=6/.pt, col="white", fontface="bold" ) +
-  geom_text(aes(x=Q5), label="Q5", size=6/.pt, col="white", fontface="bold") +
+  geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="gray80", alpha=0.5, size=1.5)+
+  geom_segment(aes(y=geo_f,x=Q1_t, yend=geo_f, xend=Q5_t), col="gray80", alpha=0.5, size=3.5)+
+  geom_point(aes(x=Q1), size=1.5, col="steelblue1", alpha=0.75) +
+  geom_point(aes(x=Q1_t), size=3.5, col="steelblue1") +
+  geom_point(aes(x=Q5), size=1.5, col="steelblue4", alpha=0.75) +
+  geom_point(aes(x=Q5_t), size=3.5, col="steelblue4") +
+  geom_text(aes(x=Q1_t), label="Q1", size=5/.pt, col="white", fontface="bold" ) +
+  geom_text(aes(x=Q5_t), label="Q5", size=5/.pt, col="white", fontface="bold") +
   scale_x_continuous(labels = scales::label_percent(1),
                      breaks = scales::breaks_width(0.01))+
   ylab(NULL) + xlab(NULL) +
@@ -367,13 +374,10 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
   labs(title = NULL,
-       subtitle = str_c("Oils and fat, cereals, fuels for transportation and heating",
-                        "from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
-       caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for the selected products.",
+       subtitle = str_c("from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
+       caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for all products. Smaller dots are for a selection of COICOP items (CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722)",
                        "Impact is the sum of mothly impacts divided by the sum of monthly income over the considered months.",
-                       "Slovenia has exempted from energy bill a part of the population in jan and feb 2022 (see companion text for details)",
-                       "Source: Eurostat HICP and income per quintile",
-                       "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722", sep="\n"))
+                       "Source: Eurostat HICP and income per quintile", sep="\n"))
 
 quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::countrycode(data$geo, "iso2c", "un.name.fr"), Q1)) , aes(y=geo_f)) + 
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
