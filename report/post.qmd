@@ -41,10 +41,14 @@ par [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Gee
 
 Quel est l'impact de la hausse des prix à la suite de la guerre en Ukraine sur le pouvoir d'achat des ménages au sein de l'Union Européenne ? C'est la question à laquelle nous tentons d'apporter quelques éléments de réponse sur ce site ([Social Impact of the War in Ukraine](https://ofce.shinyapps.io/siwu/), mis régulièrement à jour) ainsi que sur ce dépôt github ([SIWU](https://github.com/OFCE/SIWU)). La question est d'importance car elle touche à la cohésion dans l'Union Européenne à l'intérieur des pays membres et entre ceux-ci.
 
-```{r, fig.asp = 1, fig.cap="Impact par quintile de la hausse des prix de certains biens"}
+```{r, fig.asp = 1}
 #| label: fig-quintile
+#| fig_scap: "Impact par quintile"
+#| fig-cap: "Hausse des consommations d'une sélection de produits depuis février 2022 jusqu'à avril 2022 en % du revenu du quintinle. L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période. Les produits sont les huiles et matières grasses, céréales, combustibles pour le transport et le chauffage (COICOP CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722)\nSource: Eurostat HICP et revenus par quintile"
+
 library(glue)
 library(scales)
+
 data <- data |>
   mutate(
       geo_f = fct_reorder(
@@ -99,7 +103,7 @@ data <- data |>
     labs(title = NULL,
          subtitle = NULL,
          caption = str_c("Note: L'impact sur chaque quintile est en % du revenu du quintinle  pour chque catégorie de produit (88 produits COICOP).",
-                         "L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période.",
+                         "L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels.",
                          "Huiles et matières grasses, céréales, combustibles pour le transport et le chauffage,",
                          "coicop CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722.",
                          "De février 2022 à avril 2022.",
@@ -115,7 +119,7 @@ Nonobstant ces limites, quels sont nos résultats aujourd'hui ? Premièrement, l
 
 [^1]: Les classements sont sensibles au point de référence : dans certains pays, l'inflation des prix de l'énergie est antérieure au début de la guerre mais peut être causée par son anticipation (sous la forme de la baisse des exportations russes).
 
-La hausse des prix dans les pays les plus touchés provient du gaz de l'électricité, du chauffage résidentiel et des carburants, impactés directement ou indirectement par les cours du gaz et du pétrole. Les Pays-Bas sont un cas exemplaire dans la mesure où [la moitié des foyers ont un contrat d'énergie à prix variable](https://www.acm.nl/en/publications/energy-monitor-2022-50-dutch-consumers-have-variable-rate-energy-contracts). De plus les Pays-Bas font partie des pays où les contrats de long-terme sont indexés sur les cours du gaz (et non plus le pétrole comme traditionnellement). Dans les pays du nord-ouest de l'Europe (Allemagne, Belgique, Danemark, France, Irlande, Luxembourg, Pays-Bas), 95% du gaz est acheté sur la base du cours du gaz (soit sur le prix spot, soit en contrat indexé sur le prix du gaz) et les 5% restants par des contrats de long-terme indexé sur le pétrole ([spglobal](https://www.spglobal.com/commodityinsights/en/market-insights/latest-news/natural-gas/070220-gas-on-gas-pricing-increases-dominance-in-european-market-igu)). Ce chiffre baisse à 78% en moyenne européenne. Aux Pays-Bas, les consommateurs sont donc potentiellement confrontés directement à la volatilité du marché. L'idée originelle de vérité des prix des marchés risque d'être remplacée par celle de rançon ou d'extorsion : la consommation étant à court-terme peu sensible au prix, une forte hausse des prix se traduit essentiellement par un transfert du consommateur vers le (pays) producteur. Les pays du G7 [discutent actuellement de mesures de blocage de prix de l'énergie afin de limiter ces effets](https://www.ft.com/content/ee090a48-5407-496f-b0e4-1fe78f37495d).
+La hausse des prix dans les pays les plus touchés provient du gaz de l'électricité, du chauffage résidentiel et des carburants, impactés directement ou indirectement par les cours du gaz et du pétrole. Les Pays-Bas sont un cas exemplaire dans la mesure où [la moitié des foyers ont un contrat d'énergie à prix variable](https://www.acm.nl/en/publications/energy-monitor-2022-50-dutch-consumers-have-variable-rate-energy-contracts). De plus les Pays-Bas font partie des pays où les contrats de long-terme sont indexés sur les cours du gaz (et non plus le pétrole comme traditionnellement). Dans les pays du nord-ouest de l'Europe (Allemagne, Belgique, Danemark, France, Irlande, Luxembourg, Pays-Bas), 95% du gaz est acheté sur la base du cours du gaz (soit sur le prix spot, soit en contrat indexé sur le prix du gaz) et les 5% restants par des contrats de long terme indexés sur le pétrole ([spglobal](https://www.spglobal.com/commodityinsights/en/market-insights/latest-news/natural-gas/070220-gas-on-gas-pricing-increases-dominance-in-european-market-igu)). Ce chiffre baisse à 78% en moyenne européenne. Aux Pays-Bas, les consommateurs sont donc potentiellement confrontés directement à la volatilité du marché. L'idée originelle de vérité des prix des marchés risque d'être remplacée par celle de rançon ou d'extorsion : la consommation étant à court terme peu sensible au prix, une forte hausse des prix se traduit essentiellement par un transfert du consommateur vers le (pays) producteur. Les pays du G7 [discutent actuellement de mesures de blocage de prix de l'énergie afin de limiter ces effets](https://www.ft.com/content/ee090a48-5407-496f-b0e4-1fe78f37495d).
 
 Pour répondre à ce choc, le gouvernement néerlandais a été moins volontariste que d'autres gouvernements européens : d'après [l'institut Bruegel](https://www.bruegel.org/publications/datasets/national-policies-to-shield-consumers-from-rising-energy-prices/), il a alloué 0,7 point de Pib à des mesures compensatrices entre septembre 2021 et mai 2022 contre 1,4 en France et 3,7 en Grèce sur la même période. Ces mesures incluent une baisse de la TVA sur l'énergie de 21 à 9% (ayant un impact sur les prix que l'on mesure dans cette étude) et une 'allocation énergie' pour les plus pauvres (800 euros).
 
