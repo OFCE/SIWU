@@ -5,7 +5,7 @@ execute:
   keep-md: true
 format: 
   html:
-    self-contained: true
+    html-math-method: webtex
 editor: visual
 ---
 
@@ -95,7 +95,10 @@ data <- data |>
             lineheight=1.5))+
     labs(title = NULL,
          subtitle = NULL)) |>
-  ggplotly(tooltip = c("label"))
+  ggplotly(tooltip = c("label")) |> 
+  layout(yaxis = list(fixedrange=TRUE),
+         xaxis = list(fixedrange=TRUE)) |> 
+  config(displayModeBar=FALSE) 
 ```
 
 D'un point de vue méthodologique, nous identifions l'évolution du prix de certains groupes de produits depuis le début de la guerre en Ukraine (le 24 février 2022), en utilisant la nomenclature COICOP qui classifie les types de consommation des ménages (alimentation, chauffage résidentiel, transport...). Nous utilisons ensuite l'Enquête européenne sur les budgets des ménages (2015) pour identifier la structure de consommation des ménages par pays de l'Union et par quintile de revenus. Nous pouvons ainsi estimer l'impact de la hausse des prix en euros et en % du revenu sur chaque quintile de revenu pour chaque pays membre de l'Union Européenne et le décomposer par source en termes de produits concernés par une forte inflation. Le poids de chaque produit dans la baisse du pouvoir d'achat dépend ainsi de son poids dans le panier de consommation et de l'inflation qu'il a subie. Ces facteurs jouent de façon hétérogène selon les pays membres et le quintile de niveau de vie des ménages.
