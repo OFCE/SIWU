@@ -6,6 +6,10 @@ execute:
 format: 
   html:
     html-math-method: webtex
+  docx: 
+    fig-width: 7
+    fig-height: 7
+    fig-dpi: 600
 editor: visual
 ---
 
