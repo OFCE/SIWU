@@ -113,9 +113,18 @@ selected <-
   mutate(typen = cur_group_id()) |> 
   ungroup()
 
+eurdoll <- exch |> filter(currency == "USD", statinfo == "AVG") |> 
+  filter(time == max(time)) |>
+  pull(NAC)
+
+eurusd <- exch |> 
+  filter(currency=="USD", statinfo =="AVG") |> 
+  select(time, eur = NAC  )
+
 CMOr <- CMO |> 
   rename(pcom = value, time = date) |>
   left_join(hicp, by="time") |> 
+  left_join(eurusd, by="time") |> 
   group_by(variable) |> 
   mutate(
     pcom_real = pcom/exch/i,
@@ -123,33 +132,31 @@ CMOr <- CMO |>
   arrange(desc(time)) |> 
   left_join(selected, by="variable") |> 
   mutate(
-    variable = factor(variable, levels=selected$variable, labels=selected$Variable))
+    variable = factor(variable, levels=selected$variable, labels=selected$Variable),
+    pcom = case_when(
+      unit=="($/mmbtu)" ~ pcom/0.293297222222,
+      TRUE ~ pcom),
+    unit = case_when(
+      unit=="($/mmbtu)" ~ "$/MWh",
+      TRUE ~ unit),
+    eunit = str_replace(unit, "[$]", "€") |> str_remove_all("[()]"),
+    epcom = pcom/eur)
 
 last_date <- max(CMOr$time)
 ld_str <-  "{month(last_date, TRUE, FALSE, 'en_US.UTF-8')} {year(last_date)}" |> glue::glue()
-eurdoll <- exch |> filter(currency == "USD", statinfo == "AVG") |> 
-  filter(time == max(time)) |>
-  pull(NAC)
+
 cocol <- qs::qread("data/coicops.qs") |> pull(color, name = coicop)
 CMOd  <- CMOr |> 
   group_by(variable) |>
   arrange(desc(time)) |> 
-  summarize(dv = first(pcom),
+  summarize(dv = first(epcom),
             time = first(time),
-            unit = first(unit),
+            unit = first(eunit),
             type  = first(type)) |> 
   ungroup() |> 
   mutate(
     unit = str_remove_all(unit, '[()]'),
     date = "{month(time, TRUE, FALSE, 'en_US.UTF-8')} {year(time)}" |> glue::glue(),
-    dv = case_when(
-      unit=="$/mmbtu" ~ dv/0.293297222222,
-      TRUE ~ dv),
-    unit = case_when(
-      unit=="$/mmbtu" ~ "$/MWh",
-      TRUE ~ unit),
-    dv = dv/eurdoll,
-    unit = str_replace(unit, "[$]", "€"),
     dv_str = prettyNum(dv, digits=3, format='fg', big.mark = ','),
     last_text = 
       "on {date}: {dv_str} {unit}" |> glue::glue())
@@ -206,3 +213,4 @@ save(gcom, CMOr, CMOd, cocol, ld_str, file="data/gcom.rdata")
 gcom2000 <- gcom %+% scale_x_date(limits = c(ymd("2000-01-01"), NA), guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y")
 graph2svg(gcom2000, ratio = 16/9, width = 16)
 graph2png(gcom2000, width = 16, height = 23, dpi=600)
+

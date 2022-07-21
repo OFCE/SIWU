@@ -299,3 +299,4 @@ qs::qsave(outcome_sorted, file = "data/outcome_sorted.qs", preset="high", nthrea
 
 bench::mark(inf = qs::qread('data/inf_sorted.qs', nthreads=4),
             outcome = qs::qread('data/outcome_sorted.qs', nthreads=4), check=FALSE)
+

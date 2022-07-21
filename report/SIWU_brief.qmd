@@ -12,6 +12,8 @@ format:
     fig-dpi: 300
     fig-format: svg
     fig-width: 5
+    comments:
+      hypothesis: true
   pdf:
     toc: true
     toc-depth: 2
@@ -36,6 +38,8 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
   fig.pos="htb", 
   out.extra="",
   dev="ragg_png",
@@ -52,6 +56,7 @@ library(ggh4x)
 library(ofce)
 library(showtext)
 library(markdown)
+library(plotly)
 if (F){
   devtools::install_github("ofce/ofce")
 }
@@ -155,21 +160,31 @@ consumption. National exposures of households to energy prices differ greatly. I
 consumption in housing by households, at the EU level, space heating represents according to
 Eurostat (2019) 63% of consumption; and 32% of energy consumption is provided by gas.
 
-```{r, commodities, fig.asp=1.2}
+```{r, commodities, fig.asp=1.}
 #| label: fig-com
 #| fig-cap: "Real price of a selection of commodities"
 # source("../R/make ISGU data.r") and source("../R/commodity prices.r") before running this chunk
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
 gcom <- qs::qread("../data/gcom.qs") 
 load("../data/gcom.rdata")
+CMOr <- CMOr |> mutate(
+  text = glue::glue(str_c(
+    "{variable}",
+    "date: {as.Date(time)}",
+    "real price index (2018=100): {round(pcom_real,1)}",
+    "nominal price {prettyNum(epcom, digits=3, format='fg', big.mark = ',')} {eunit}", sep="<br>")))
+
 g <- ggplot(CMOr |> filter(type!="unknown"))+
-  geom_line(aes(x=time, y=pcom_real, color=type), show.legend = FALSE, size=0.25)+
+  geom_line(aes(x=time, y=pcom_real, 
+                color=type, group=variable,
+                text=text), 
+            show.legend = FALSE, size=0.25)+
   scale_y_log10(breaks = scales::log_breaks(10), 
                 minor_breaks = scales::log_breaks(16),
                 guide = "axis_minor")+
-  geom_text(data=CMOd |> filter(type!="unknown"), 
-            aes(x=ymd("2022-01-01"), y=18, label=last_text, color= type), 
-            hjust=1, vjust=1, size=6/.pt, show.legend=FALSE)+
+  # geom_text(data=CMOd |> filter(type!="unknown"), 
+  #           aes(x=ymd("1960-04-01"), y=22, label=last_text, color= type), 
+  #           hjust=0, vjust=1, size=7/.pt, show.legend=FALSE)+
   scale_color_manual(values = c(food = cocol[["CP01"]], 
                                 nrg = cocol[["CP07"]], 
                                 fer = cocol[["CP05"]])) +
@@ -185,12 +200,14 @@ g <- ggplot(CMOr |> filter(type!="unknown"))+
         "Eurostat HICP monthly since 1990, INSEE National accounts from 1960 to 1990 for price index (France)",
         "OECD EO110 for exhange rate FRA/USD, EUR/USD", 
         sep="\n"))+
-  theme_ofce()+
+  theme_ofce(base_size = 10)+
   scale_x_date(guide="axis_minor", 
-               date_minor_breaks = "1 year", 
-               date_labels = "%Y") +
+                date_minor_breaks = "1 year", 
+                date_labels = "%Y") +
   theme(panel.spacing = unit(3, "pt"))
-g
+g |> plotly::ggplotly(tooltip = "text") |> 
+  layout(yaxis = list(fixedrange=TRUE), showlegend = FALSE) |> 
+  config(displayModeBar=FALSE) 
 ```
 
 However, gas is not used in small islands like Cyprus and Malta (0%); and marginal in Sweden (0,3%)
