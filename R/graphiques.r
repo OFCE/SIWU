@@ -73,7 +73,7 @@ gdis_feb <- map(1:3, ~{
     geom_text(
       data = filter(dmaxx, coicop_digit==3, ref==since_wiu) , 
       aes(x=Inf, y=Inf, label="from {str_wiu} to {to_date}" |> glue()),
-      hjust=1, vjust=1, size=rel(1)) +
+      hjust=1, vjust=1, size=6/.pt) +
     scale_x_continuous(labels = scales::label_percent(.1), limits = c(-0.005, 0.015), 
                        name = "Contribution to inflation", breaks = scales::breaks_width(0.005))+
     scale_y_continuous(name="weight in HICP", labels = scales::label_percent(1))+
@@ -83,7 +83,7 @@ gdis_feb <- map(1:3, ~{
     theme_ofce(base_size = 9) +
     theme(plot.margin = margin(12,12,12,12,"pt"), panel.spacing = unit(6,"pt"),
           legend.position = "right", legend.key.size = unit(9, "pt"), legend.text = element_text(size=6),
-          axis.text = element_text(size = rel(0.5))) +
+          axis.text = element_text(size = 6/.pt)) +
     labs(title = "Contribution to inflation distribution",
          subtitle = "since Feb. 2022, subfig {.x}." |> glue::glue(),
          caption = str_c("Reading note: at 0 on the x axis are represented 3 digit COICOP (colored according to 1 digit COICOP)",
@@ -91,7 +91,7 @@ gdis_feb <- map(1:3, ~{
                          "to inflation is positive, height of the bar is the weight in HICP, on the y axis, stacked if necessary.",
                          "Source: Eurostat prc_hicp_midx, prc_hicp_inw", sep="\n"))+
     ggrepel::geom_text_repel(aes(label=label_ipm, color = coicop1, y=pm),
-                             size=rel(1), segment.size=0.1, min.segment.length = 0,
+                             size=6/.pt, segment.size=0.1, min.segment.length = 0,
                              max.overlaps = 50, ylim=c(0.05, NA))+
     ggforce::facet_wrap_paginate(vars(geo_f), nrow=3, ncol=3, page = .x)
   graph2png(gg, file="inflation_coicop_wiu_{.x}" |> glue::glue(), width = png_w, height = png_h, dpi=600)})
