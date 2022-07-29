@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/924753/4b323de21cad42d4a5fd759b9ba83e39
+bundleId: https://api.rpubs.com/api/v1/document/924753/4b323de21cad42d4a5fd759b9ba83e39
+url: http://rpubs.com/xavier_timbeau/924753
+when: 1659029155.32453
+lastSyncTime: 1659029155.32457

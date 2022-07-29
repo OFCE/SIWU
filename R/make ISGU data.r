@@ -8,6 +8,7 @@ list_eurostat_datasets <- c("prc_hicp_midx", "prc_hicp_inw",
                             "hbs_str_t223", "hbs_str_t226",
                             "icw_res_02", "hbs_exp_t121", "hbs_str_t211")
 eucountries <- setdiff(eurostat::eu_countries$code, "UK")
+# sna_clear_cache()
 cache_state <- sna_check_cache()
 
 walk(list_eurostat_datasets, ~{

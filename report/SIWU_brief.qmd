@@ -324,14 +324,19 @@ ksplit <- function(x,k) {
 
 inf_sorted2 <- inf_sorted |> 
   left_join(all_coicop |> select(coicop = coicop3, l3), by="coicop") |> 
-  mutate(text = if_else(is.na(l3), 
-                        glue(""),
-                        glue(str_c("<b>{geo_f}</b>",
-                                   "<i>{coicop} {l3}</i> ({label_percent(.1)(pm)} in consumption)",
-                                   "{label_percent(.1)(i)} increase since {since_wiu}",
-                                   "{label_percent(.1)(imd)} average increase  since {since_wiu}",
-                                   "{label_percent(.1)(-imd*pm)} contribution to average monthly income since {since_wiu}", 
-                                   sep="\n"))))
+  mutate(text = if_else(
+    is.na(l3), 
+    glue(""),
+    glue(
+      str_c(
+        "<b>{geo_f}</b>",
+        "<i>{coicop} {l3}</i>",
+        "({label_percent(.1)(pm)} in consumption)",
+        "<br>From {month(since_wiu,TRUE, FALSE, 'en_US.UTF-8')} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date_wiu)}:",
+        "{label_percent(.1)(i)} price increase",
+        "{label_percent(.1)(imd)} average monthly price increase",
+        "{label_percent(.1)(-imd*pm)} contribution to average monthly income", 
+        sep="\n"))))
 cntr <- inf_sorted2 |> pull(geo_f) |> unique() |> sort() |> ksplit(9)
 g_wiu <- imap(cntr, ~{
   gg <- ggplot(inf_sorted2 |> filter(d==dmax$dmax, ref==since_wiu, geo_f%in%.x)) +
@@ -340,7 +345,7 @@ g_wiu <- imap(cntr, ~{
               fill=NA, col="black", size=0.1,  show.legend=FALSE)+
     geom_rect(data = ~filter(.x, coicop_digit==3),
               aes(xmin=xmin, xmax=xmax, ymin=0, ymax=imd, fill = coicop1, group=geo_f, text=text), 
-              size=0.01, col="white", show.legend=TRUE)+
+              size=0.05, col="white", show.legend=TRUE)+
     theme_ofce()+
     theme(legend.position = "bottom", legend.key.size = unit(8, "pt"))+
     guides(color=guide_legend(ncol=3, nrow=4))+
@@ -365,14 +370,16 @@ g_wiu <- imap(cntr, ~{
       size=4/.pt, segment.size=0.1, min.segment.length = 0, 
       max.overlaps = 100, ylim=c(NA, 0), show.legend=FALSE)+ 
     scale_color_manual(labels = coicops$short_label2,
-                      values = coicops |> pull(color, name = coicop),  
-                      name=NULL) +
+                       values = coicops |> pull(color, name = coicop),  
+                       name=NULL) +
     facet_wrap(vars(geo_f))
 })
 if (knitr::is_html_output()) {
   g_wiu[[1]] |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE) |> 
-    layout(yaxis = list(fixedrange=TRUE), showlegend = FALSE) |> 
+    layout(yaxis = list(fixedrange=TRUE),
+           showlegend = FALSE,
+           hoverlabel=list(bgcolor="white")) |> 
     config(displayModeBar=FALSE)
 } else {
   g_wiu[[1]]}
@@ -380,12 +387,28 @@ if (knitr::is_html_output()) {
 
 ```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (2/3)"}
 #| label: fig-priceinc2
-g_wiu[[2]] %+% guides(fill="none", color="none")
+if (knitr::is_html_output()) {
+  g_wiu[[2]] |>
+    plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE) |> 
+    layout(yaxis = list(fixedrange=TRUE),
+           showlegend = FALSE,
+           hoverlabel=list(bgcolor="white")) |> 
+    config(displayModeBar=FALSE)
+} else {
+  g_wiu[[2]]%+% guides(fill="none", color="none")}
 ```
 
 ```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (3/3)"}
 #| label: fig-priceinc3
-g_wiu[[3]] %+% guides(fill="none", color="none")
+if (knitr::is_html_output()) {
+  g_wiu[[3]] |>
+    plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE) |> 
+    layout(yaxis = list(fixedrange=TRUE),
+           showlegend = FALSE,
+           hoverlabel=list(bgcolor="white")) |> 
+    config(displayModeBar=FALSE)
+} else {
+  g_wiu[[3]]%+% guides(fill="none", color="none")}
 ```
 
 \FloatBarrier
