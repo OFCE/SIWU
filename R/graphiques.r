@@ -348,11 +348,13 @@ data <- outcome_sorted |>
   group_by(geo_f, sub) |>
   summarise(across(c(Q1,Q5), ~sum(.x, na.rm=TRUE)), geo=first(geo)) |> 
   ungroup() |> 
-   mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower()) |> 
+  mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower()) |> 
   ungroup() |> 
   pivot_wider(id_col = c(geo_f, geo), names_from = sub, values_from = c(Q1,Q5)) |> 
   rename_with(~str_replace(str_remove(.x, "_TRUE"), "_FALSE", "_t")) |> 
   mutate(geo_f = fct_reorder(geo_f, Q1_t))
+# Aude Martin a.martin@alternatives-economiques.fr
+data.table::fwrite(data, file="data/quintiles.csv")
 
 quantiles1et5 <- ggplot(data , aes(y=geo_f)) + 
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="gray80", alpha=0.5, size=1.5)+
@@ -375,11 +377,15 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
   labs(title = NULL,
        subtitle = str_c("from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
-       caption = str_c("Note: Impact on each quintile is as a share of income of the quintile for all products. Smaller dots are for a selection of COICOP items (CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722)",
-                       "Impact is the sum of mothly impacts divided by the sum of monthly income over the considered months.",
-                       "Source: Eurostat HICP and income per quintile", sep="\n"))
+       caption = str_c(
+         "Note: Impact on each quintile is as a share of income of the quintile for all products.",
+         "Smaller dots are for a selection of COICOP items (CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722)",
+         "Impact is the sum of mothly impacts divided by the sum of monthly income over the considered months.",
+         "Source: Eurostat HICP and income per quintile", sep="\n"))
 
-quantiles1et5.fr <- ggplot(data |> mutate(geo_f = fct_reorder(countrycode::countrycode(data$geo, "iso2c", "un.name.fr"), Q1)) , aes(y=geo_f)) + 
+quantiles1et5.fr <- ggplot(
+  data |> mutate(geo_f = fct_reorder(countrycode::countrycode(data$geo, "iso2c", "un.name.fr"), Q1)),
+  aes(y=geo_f)) + 
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
   geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
   geom_point(aes(x=Q5), size=3.5, col="steelblue4") +
@@ -540,11 +546,11 @@ cts <- imap(table_index, ~{
     tab_style(style = cell_text(indent = px(10)), locations = cells_body(columns = l3, rows = !str_detect(l3,"CP00"))) |> 
     ## tab options ----------------------------
   text_transform(locations = cells_body(), fn = \(x) if_else(x=="100.0%", "-", x)) |> 
-  cols_width(where(is.numeric) ~ px(40)) |> 
+    cols_width(where(is.numeric) ~ px(40)) |> 
     table_ofce() |> 
-   tab_options(column_labels.padding.horizontal = px(5),
-               data_row.padding = px(1),
-               table.font.size = 8)
+    tab_options(column_labels.padding.horizontal = px(5),
+                data_row.padding = px(1),
+                table.font.size = 8)
   gtsave(countries_table, "svg/annex_{.y}.png" |> glue::glue(), zoom=4)
   countries_table
 })
