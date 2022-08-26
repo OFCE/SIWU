@@ -47,6 +47,8 @@ knitr::opts_chunk$set(
   out.width="100%",
   fig.showtext=TRUE,
   cache=FALSE)
+
+plotly_width  <- 750 
 ```
 
 ```{r datainit, include=FALSE}
@@ -211,8 +213,8 @@ g <- ggplot(CMOr |> filter(type!="unknown"))+
 if (knitr::is_html_output()) {
   (g %+% theme(text = element_text(family = "arial", size = 9))) |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE,
-                     width = 600, height = 700) |> 
-    layout(yaxis = list(fixedrange=TRUE), showlegend = FALSE) |>  
+                     width = plotly_width, height = 800) |> 
+    layout(yaxis = list(fixedrange=TRUE, type = "log"), showlegend = FALSE) |>  
     config(displayModeBar=FALSE)
 } else {
   g + geom_text(data=CMOd |> filter(type!="unknown"), 
@@ -239,7 +241,11 @@ Union through volumes, but also through prices. Despite price convergence due to
 towards liberalisation and a single European energy market, national utilities and consumers face
 different prices depending on the contracts signed with suppliers.
 
-![Energy final consumption per capita by vector](../svg/tab1.png){#fig-nrg}
+```{r}
+#| label: fig-nrg
+#| fig-cap: "Energy final consumption per capita by vector"
+knitr::include_graphics(here::here("svg", "tab1.png"))
+```
 
 Most European countries have gone from oil-indexation to gas-indexation in the long-term contracts
 signed with gas suppliers. In the European Union, oil-indexation represented nearly 80% of contracts
@@ -377,9 +383,9 @@ g_wiu <- imap(cntr, ~{
     facet_wrap(vars(geo_f))
 })
 if (knitr::is_html_output()) {
-  g_wiu[[1]] |>
+  (g_wiu[[1]] %+% theme(text = element_text(family = "arial", size = 9))) |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE, 
-                     width = 600, height = 800) |> 
+                     width = plotly_width, height = 800) |> 
     layout(yaxis = list(fixedrange=TRUE),
            showlegend = FALSE,
            hoverlabel=list(bgcolor="white")) |> 
@@ -391,9 +397,9 @@ if (knitr::is_html_output()) {
 ```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (2/3)"}
 #| label: fig-priceinc2
 if (knitr::is_html_output()) {
-  g_wiu[[2]] |>
+  (g_wiu[[2]] %+% theme(text = element_text(family = "arial", size = 9))) |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE, 
-                     width = 600, height = 800) |> 
+                     width = plotly_width, height = 800) |> 
     layout(yaxis = list(fixedrange=TRUE),
            showlegend = FALSE,
            hoverlabel=list(bgcolor="white")) |> 
@@ -405,9 +411,9 @@ if (knitr::is_html_output()) {
 ```{r, fig.asp = 1.1, fig.cap="Price increase since War in Ukraine (3/3)"}
 #| label: fig-priceinc3
 if (knitr::is_html_output()) {
-  g_wiu[[3]] |>
+  (g_wiu[[3]] %+% theme(text = element_text(family = "arial", size = 9))) |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE, 
-                     width = 600, height = 800) |> 
+                     width = plotly_width, height = 800) |> 
     layout(yaxis = list(fixedrange=TRUE),
            showlegend = FALSE,
            hoverlabel=list(bgcolor="white")) |> 

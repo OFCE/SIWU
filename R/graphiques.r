@@ -560,3 +560,5 @@ save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts,
      since_1y, since_wiu, inf_sorted, outcome_sorted, outcomeQ1Q5,
      coicops, to_date_wiu, data,
      file="data/sorties.rdata")
+
+fs::dir_copy("svg", "siwu-web/svg")
