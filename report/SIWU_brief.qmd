@@ -185,7 +185,7 @@ g <- ggplot(CMOr |> filter(type!="unknown"))+
             show.legend = FALSE, size=0.25)+
   scale_y_log10(breaks = scales::log_breaks(10), 
                 minor_breaks = scales::log_breaks(16),
-                guide = "axis_minor")+
+               guide = "axis_minor")+
   # geom_text(data=CMOd |> filter(type!="unknown"), 
   #           aes(x=ymd("1960-04-01"), y=22, label=last_text, color= type), 
   #           hjust=0, vjust=1, size=7/.pt, show.legend=FALSE)+
@@ -214,7 +214,7 @@ if (knitr::is_html_output()) {
   (g %+% theme(text = element_text(family = "arial", size = 9))) |>
     plotly::ggplotly(tooltip = "text", dynamicTicks = TRUE,
                      width = plotly_width, height = 800) |> 
-    layout(yaxis = list(fixedrange=TRUE, type = "log"), showlegend = FALSE) |>  
+    layout(yaxis = list(fixedrange=TRUE), showlegend = FALSE) |>  
     config(displayModeBar=FALSE)
 } else {
   g + geom_text(data=CMOd |> filter(type!="unknown"), 
