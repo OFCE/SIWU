@@ -561,4 +561,4 @@ save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts,
      coicops, to_date_wiu, data,
      file="data/sorties.rdata")
 
-fs::dir_copy("svg", "siwu-web/svg")
+fs::dir_copy("svg", "siwu-web/svg", overwrite = TRUE)

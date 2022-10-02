@@ -13,21 +13,15 @@ format:
 editor: visual
 ---
 
-
-
-
-
 par [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Geerolf](mailto:françois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr)
 
 Quel est l'impact de la hausse des prix à la suite de la guerre en Ukraine sur le pouvoir d'achat des ménages au sein de l'Union Européenne ? C'est la question à laquelle nous tentons d'apporter quelques éléments de réponse sur ce site ([Social Impact of the War in Ukraine](https://ofce.shinyapps.io/siwu/), mis régulièrement à jour) ainsi que sur ce dépôt github ([SIWU](https://github.com/OFCE/SIWU)). La question est d'importance car elle touche à la cohésion dans l'Union Européenne à l'intérieur des pays membres et entre ceux-ci.
 
-
-::: {.cell fig.asp='1'}
-::: {.cell-output-display}
-![Hausse des consommations en valeur par la hausse des prix depuis février 2022 jusqu'à avril 2022 en % du revenu du quintile. L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période. Les points plus petits sont pour une sélection de produits (huiles et matières grasses (CP0111), céréales (CP0115), combustibles pour le transport (CP0451, CP0452, CP0453, CP0454) et le chauffage (CP0722) - Source: Eurostat HICP et revenus par quintile](post_files/figure-docx/fig-quintile-1.png){#fig-quintile fig-pos='htb' fig-scap='Impact par quintile' width=100%}
+::: {.cell fig.asp="1"}
+::: cell-output-display
+![Hausse des consommations en valeur par la hausse des prix depuis février 2022 jusqu'à avril 2022 en % du revenu du quintile. L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période. Les points plus petits sont pour une sélection de produits (huiles et matières grasses (CP0111), céréales (CP0115), combustibles pour le transport (CP0451, CP0452, CP0453, CP0454) et le chauffage (CP0722) - Source: Eurostat HICP et revenus par quintile](post_files/figure-docx/fig-quintile-1.png){#fig-quintile fig-pos="htb" fig-scap="Impact par quintile" width="100%"}
 :::
 :::
-
 
 D'un point de vue méthodologique, nous identifions l'évolution du prix de certains groupes de produits depuis le début de la guerre en Ukraine (le 24 février 2022), en utilisant la nomenclature COICOP qui classifie les types de consommation des ménages (alimentation, chauffage résidentiel, transport...). Nous utilisons ensuite l'Enquête européenne sur les budgets des ménages (2015) pour identifier la structure de consommation des ménages par pays de l'Union et par quintile de revenus. Nous pouvons ainsi estimer l'impact de la hausse des prix en euros et en % du revenu sur chaque quintile de revenu pour chaque pays membre de l'Union Européenne et le décomposer par source en termes de produits concernés par une forte inflation. Le poids de chaque produit dans la baisse du pouvoir d'achat dépend ainsi de son poids dans le panier de consommation et de l'inflation qu'il a subie. Ces facteurs jouent de façon hétérogène selon les pays membres et le quintile de niveau de vie des ménages.
 

@@ -73,14 +73,14 @@ options(ofce.base_family = "Roboto")
 options(ofce.base_size = 9)
 ```
 
-# Social Impact of War in Ukraine
+## Social Impact of War in Ukraine
 
 The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
 cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the
 economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution
 of Europeans' purchasing power in the short run.
 
-## Main channels
+### Main channels
 
 The main channel that we identify, concerning the social impact of the war in Ukraine, is the rise
 in the prices of consumer goods or services linked to actual or anticipated interruptions in the
@@ -121,7 +121,7 @@ channels.
     purchasing power and redistributive effects caused by increases of prices, being a general
     increase in price or located on a few products.
 
-## Methodology
+### Methodology
 
 Our methodology is as follows:
 
@@ -141,7 +141,7 @@ Our methodology is as follows:
 [^1]: We use a loess smoothing algorithm giving results close to X11/X13 procedures from the Census
     Bureau.
 
-## Context
+### Context
 
 The most important tensions concerning price hikes in Europe today come from the gas market (see
 @fig-com). Gas is one the main source of energy in Europe (21.5% of EU's primary energy consumption
