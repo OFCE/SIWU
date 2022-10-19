@@ -17,23 +17,28 @@ showtext::showtext_auto()
 
 # la source des données de prix est la banque mondiale
 # https://www.worldbank.org/en/research/commodity-markets
+# la source des données de prix est la banque mondiale
+# https://www.worldbank.org/en/research/commodity-markets
 fs::dir_create("data")
 download.file("https://thedocs.worldbank.org/en/doc/5d903e848db1d1b83e0ec8f744e55570-0350012021/related/CMO-Historical-Data-Monthly.xlsx",
               destfile = "data/CMO-Historical-Data-Monthly.xlsx", mode="wb")
 
-CMO <- readxl::read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices", skip = 6) |> 
+CMO <- readxl::read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices", skip = 4) |> 
+  slice(-1) |> 
   rename(date = ...1) |> 
   mutate(date = paste0(substr(date, 1, 4), "-", substr(date, 6, 7), "-01")  |>  as.Date())  |> 
   gather(variable, value, -date) |> 
   mutate(value = as.numeric(value))  |> 
-  filter(!is.na(value))
+  filter(!is.na(value)) |> 
+  mutate(variable = str_remove_all(variable, "\\*"))
 
 variable <- read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices") |> 
-  slice(4, 5, 6) |> 
+  slice(4, 5) |> 
   select(-1) |> 
   t() |> 
   as_tibble()  |> 
-  select(variable = V3, Variable = V1, unit = V2)
+  select(variable = V1, unit = V2) |> 
+  mutate(variable = str_remove_all(variable, "\\*"))
 
 ggplot(CMO)+geom_line(aes(x=date, y=value))+scale_y_log10()+facet_wrap(vars(variable))
 
@@ -90,23 +95,24 @@ exch <- sna_get("ERT_BIL_EUR_M" |> tolower())
 selected <- 
   tribble(
     ~variable, ~type,
-    "ALUMINUM", "fer",
-    "BEEF", "food",
-    "COAL_AUS", "nrg",
-    "COPPER", "fer",
-    "CRUDE_BRENT", "nrg",
-    "GOLD", "fer",
-    "NGAS_EUR", "nrg",
-    "WHEAT_US_HRW", "food",
-    "PHOSROCK", "fer",
+    "Aluminum", "fer",
+    "Beef", "food",
+    "Coal, Australian", "nrg",
+    "Copper", "fer",
+    "Crude oil, Brent", "nrg",
+    "Gold", "fer",
+    "Natural gas, Europe ", "nrg",
+    "Wheat, US HRW", "food",
+    "Phosphate rock", "fer",
     "Zinc", "fer",
-    "LEAD", "fer",
-    "NICKEL", "fer",
-    "MAIZE", "food",
-    "PLATINIUM", "fer",
-    "SILVER", "fer",
-    "NGAS_US", "nrg",
-    "SUNFLOWER_OIL", "food") |> 
+    "Lead", "fer",
+    "Nickel", "fer",
+    "Maize", "food",
+    "Platinum", "fer",
+    "Silver", "fer",
+    "Natural gas, US", "nrg",
+    "Liquefied natural gas, Japan", "nrg",
+    "Sunflower oil", "food") |> 
   full_join(variable, by="variable") |> 
   arrange(type) |>  
   group_by(type) |> 
@@ -132,7 +138,7 @@ CMOr <- CMO |>
   arrange(desc(time)) |> 
   left_join(selected, by="variable") |> 
   mutate(
-    variable = factor(variable, levels=selected$variable, labels=selected$Variable),
+    variable = factor(variable),
     pcom = case_when(
       unit=="($/mmbtu)" ~ pcom/0.293297222222,
       TRUE ~ pcom),
