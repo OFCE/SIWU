@@ -4,7 +4,7 @@
 
 ### last update
 
-HICP update october 19, 2022 [Social Impact of the War in Ukraine](https://ofce.github.io/siwu/report/siwu_brief.html)
+HICP update october 19, 2022 [Social Impact of the War in Ukraine](https://ofce.github.io/SIWU/report/SIWU_brief.html)
 
 [as a pdf](report/SIWU_brief_october_22.pdf)
 
