@@ -18,6 +18,8 @@ format:
     reference-location: margin
     code-tools:
       source: https://github.com/ofce/siwu
+    comments: 
+      hypothesis: true
   pdf:
     toc: true
     toc-depth: 1
