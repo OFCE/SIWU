@@ -1,7 +1,7 @@
 ---
 title: "Social Impact of the War in Ukraine"
 author: "François Geerolf, Xavier Timbeau, Guillaume Allègre"
-date: '2022-10-19'
+date: '2022-10-26'
 abstract: |
     *Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/siwu>. Updated with HICP release 19/10/2022, prices indexes for all products up to september 2022.*
 format:
@@ -712,7 +712,7 @@ restaurants) and cars. Price caps being very costly, they are being removed for 
 households. Hungary is the country where the ratio between first and fifth quintile purchasing power
 loss is the lowest (x1,5 against x2,5 in Estonia).
 
-### Ireland 
+### Ireland
 
 Ireland is also relatively protected from energy price inflation., as reflected by the presence of
 Restaurants as top contributor above electricity and fuels. The price of liquid fuels exploded but
@@ -730,7 +730,7 @@ crisis with low growth and low inflation. The government implemented tax cuts in
 electricity sector, and also a 30 cents reduction of gasoline through July. Data for consumption
 share is not available for the year 2015. We used data for the year 2005.
 
-### Latvia 
+### Latvia
 
 Latvia has seen a very important impact of price increases : since February, it is the second most
 hit behind neighboring Estonia. Other neighbors include Russia and Bielorussia. Russia is the second
