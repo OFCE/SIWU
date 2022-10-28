@@ -1,10 +1,14 @@
+---
+---
+---
+
 # Social Impact of the War in Ukraine (SIWU)
 
 > [François Geerolf](mailto:francois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr), [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr)
 
 ### last update
 
-HICP update october 19, 2022 [Social Impact of the War in Ukraine](https://ofce.github.io/SIWU/report/SIWU_brief.html)
+HICP update october 26, 2022 [Social Impact of the War in Ukraine](https://ofce.github.io/SIWU/report/SIWU_brief.html)
 
 [as a pdf](report/SIWU_brief_october_22.pdf)
 
