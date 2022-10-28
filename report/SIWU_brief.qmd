@@ -54,7 +54,7 @@ knitr::opts_chunk$set(
   fig.showtext=TRUE,
   cache=FALSE)
 
-plotly_width  <- 750 
+plotly_width  <- 650 
 ```
 
 ```{r datainit, include=FALSE}

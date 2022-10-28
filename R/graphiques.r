@@ -338,8 +338,9 @@ gql1_nld <- ggplot(outcome_sorted |> filter(d==dmax_o$dmax, ref==since_wiu, geo=
 graph2png(gql1_nld, file = "coicop_l1_wiu_NLD" |> glue::glue(), width = png_w, height = png_h, dpi=600)
 
 # quintiles simplifiés ------------------------
+since_sep <- "2021-09-01"
 data <- outcome_sorted |> 
-  filter(d==dmax_o$dmax, ref==since_wiu) |> 
+  filter(d==dmax_o$dmax, ref==since_1y) |> 
   select(geo_f, coicop, outcome, quantile, coicop_digit, geo) |> 
   filter(quantile%in%c("Q1", "Q5")) |>
   pivot_wider(names_from = quantile, values_from = outcome) |> 
@@ -376,7 +377,7 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
         axis.text.y = element_text(margin=margin(0,10,0,0,"pt")))+
   ggflags::geom_flag(aes(x=-Inf, country=tolower(geo)), size=3) +
   labs(title = NULL,
-       subtitle = str_c("from {str_wiu} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
+       subtitle = str_c("from {str_1y} to {month(to_date_wiu,TRUE, FALSE, 'en_US.UTF-8')} {year(to_date)}" |> glue(), sep="\n"),
        caption = str_c(
          "Note: Impact on each quintile is as a share of income of the quintile for all products.",
          "Smaller dots are for a selection of COICOP items (CP0111, CP0115, CP0451, CP0452, CP0453, CP0454, CP0722)",
