@@ -82,7 +82,7 @@ data <- data |>
     geom_text(aes(x=Q1_t), label="Q1", size=6/.pt, col="white", fontface="bold" ) +
     geom_text(aes(x=Q5_t), label="Q5", size=6/.pt, col="white", fontface="bold") +
     scale_x_continuous(labels = scales::label_percent(1),
-                       breaks = scales::breaks_width(0.01))+
+                       breaks = scales::breaks_width(0.05))+
     ylab(NULL) + xlab(NULL) +
     theme_ofce(base_size = 12) +
     theme(panel.grid.major.y = element_blank(),
