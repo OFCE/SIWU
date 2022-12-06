@@ -39,7 +39,6 @@ options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Arial")
 options(ofce.base_size = 12)
 
-load("../data/sorties.rdata")
 ```
 
 par [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Geerolf](mailto:françois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr)
