@@ -562,6 +562,6 @@ save(gdis_feb, gdis_1y, g_1y, g_wiu, gql1, cts,
      coicops, to_date_wiu, data,
      file="data/sorties.rdata")
 
-save(data, file="data/quantile15.rdata")
+save(data, file="data/quantile15.smallrdata")
 fs::dir_copy("svg", "siwu-web/svg", overwrite = TRUE)
 fs::dir_copy("svg", "report/svg", overwrite = TRUE)
