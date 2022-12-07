@@ -1,9 +1,9 @@
 ---
 title: "Social Impact of the War in Ukraine"
 author: "François Geerolf, Xavier Timbeau, Guillaume Allègre"
-date: '2022-10-26'
+date: '2022-11-17'
 abstract: |
-    *Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/siwu>. Updated with HICP release 19/10/2022, prices indexes for all products up to september 2022.*
+    *Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/siwu>. Updated with HICP release 17/11/2022, prices indexes for all products up to october 2022. Next update on 16/12/2022*
 format:
   html: 
     toc: true

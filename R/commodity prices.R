@@ -23,24 +23,24 @@ fs::dir_create("data")
 download.file("https://thedocs.worldbank.org/en/doc/5d903e848db1d1b83e0ec8f744e55570-0350012021/related/CMO-Historical-Data-Monthly.xlsx",
               destfile = "data/CMO-Historical-Data-Monthly.xlsx", mode="wb")
 
-CMO <- readxl::read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices", skip = 4) |> 
+CMO <- readxl::read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices", skip = 6) |> 
   slice(-1) |> 
   rename(date = ...1) |> 
   mutate(date = paste0(substr(date, 1, 4), "-", substr(date, 6, 7), "-01")  |>  as.Date())  |> 
   gather(variable, value, -date) |> 
   mutate(value = as.numeric(value))  |> 
   filter(!is.na(value)) |> 
-  mutate(variable = str_remove_all(variable, "\\*"))
+  rename(code = variable)
 
 variable <- read_xlsx("data/CMO-Historical-Data-Monthly.xlsx", sheet = "Monthly Prices") |> 
-  slice(4, 5) |> 
+  slice(4, 5, 6) |> 
   select(-1) |> 
   t() |> 
   as_tibble()  |> 
-  select(variable = V1, unit = V2) |> 
+  select(variable = V1, unit = V2, code = V3) |> 
   mutate(variable = str_remove_all(variable, "\\*"))
 
-ggplot(CMO)+geom_line(aes(x=date, y=value))+scale_y_log10()+facet_wrap(vars(variable))
+ggplot(CMO)+geom_line(aes(x=date, y=value))+scale_y_log10()+facet_wrap(vars(code))
 
 # prix, données historiques (on utilisera l'INSEE pour les données récentes)
 # 
@@ -131,12 +131,12 @@ CMOr <- CMO |>
   rename(pcom = value, time = date) |>
   left_join(hicp, by="time") |> 
   left_join(eurusd, by="time") |> 
-  group_by(variable) |> 
+  group_by(code) |> 
   mutate(
     pcom_real = pcom/exch/i,
     pcom_real = 100*pcom_real/mean(pcom_real[between(year(time), 2018, 2018)])) |> 
   arrange(desc(time)) |> 
-  left_join(selected, by="variable") |> 
+  left_join(selected, by="code") |> 
   mutate(
     variable = factor(variable),
     pcom = case_when(
