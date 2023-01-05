@@ -115,13 +115,23 @@ coicop_colors <- tibble(
 
 # Change in Prices: geo, coicop ---------
 
+deseason <- function(data, start) {
+  nas <- is.na(data)
+  ts <- ts(data[!nas], start=c(lubridate::year(first(start)), lubridate::month(first(start))), deltat = 1/12)
+  dts <- stl(ts, 7)$time.series[, "seasonal"]
+  res <- data
+  res[nas] <- NA
+  res[!nas] <- dts
+  return(res)
+}
+
 cluster <- multidplyr::new_cluster(8)
 inf_1 <- prc_hicp_midx  |>
   filter(unit == "I15", str_starts(coicop, "CP"), geo %in% eucountries) |> # un filtre basique
   group_by(coicop, geo, unit) |> 
   arrange(time) |>
   mutate(values=if_else(values==0, NA_real_, values)) |> # on traite ici des valeurs manquantes pour la Grèce CP0732 et l'Irlande CP0441 
-  mutate(values = zoo::na.locf(values)) |> # en utilisant les dernières valeurs observées
+  mutate(values = zoo::na.locf(values, na.rm=FALSE)) |> # en utilisant les dernières valeurs observées
   mutate(coicop_digit = str_length(coicop)-3,
          coicop_digit = if_else(coicop=="CP00", 0, coicop_digit)) |> 
   filter(coicop_digit<=3) |> # on ne garde pas coicop l4
@@ -129,13 +139,13 @@ inf_1 <- prc_hicp_midx  |>
   filter(max(time)>= ymd("2022-02-01")) |> # on enlève les données non disponibles en 2022
   group_by(geo, unit, coicop) |> 
   arrange(time) |> 
-  multidplyr::partition(cluster) |> # pour utiliser le multicore
+  #multidplyr::partition(cluster) |> # pour utiliser le multicore
   mutate(
     start = min(time),
     lp_nsa = log(values),
     # la désaisonalisation avec stl (rapide, ne traite pas les outliers)
     # avec seasonal on obtient à peu près la même chose, mais c'est très lent
-    lp_sa = stl(ts(lp_nsa, start=c(lubridate::year(start), lubridate::month(start)), deltat = 1/12), 7, na.action=na.pass)$time.series[, "seasonal"],
+    lp_sa = deseason(lp_nsa, start),
     price_sa = exp(lp_nsa-lp_sa), 
     price_nsa = values) |> 
   collect() |>
