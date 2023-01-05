@@ -1,5 +1,5 @@
 ---
----
+
 ---
 
 # Social Impact of the War in Ukraine (SIWU)
@@ -8,7 +8,7 @@
 
 ### last update
 
-[Social Impact of the War](report/SIWU_brief.html)
+[Social Impact of the War](https://ofce.github.io/SIWU/report/SIWU_brief.html)
 
 [as a pd](report/SIWU_brief_december_22.pdf)[f](report/SIWU_brief_november_22.pdf)
 
