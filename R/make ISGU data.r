@@ -121,7 +121,7 @@ inf_1 <- prc_hicp_midx  |>
   group_by(coicop, geo, unit) |> 
   arrange(time) |>
   mutate(values=if_else(values==0, NA_real_, values)) |> # on traite ici des valeurs manquantes pour la Grèce CP0732 et l'Irlande CP0441 
-  mutate(values = zoo::na.locf(values)) |> # en utilisant les dernières valeurs observées
+  mutate(values = zoo::na.locf(values, na.rm=FALSE)) |> # en utilisant les dernières valeurs observées
   mutate(coicop_digit = str_length(coicop)-3,
          coicop_digit = if_else(coicop=="CP00", 0, coicop_digit)) |> 
   filter(coicop_digit<=3) |> # on ne garde pas coicop l4
