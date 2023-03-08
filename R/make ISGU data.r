@@ -16,6 +16,7 @@ walk(list_eurostat_datasets, ~{
 })
 
 # on donne un niveau à coicop et on crée CP00
+# vérifier le panachage des années
 
 hbs_str_t223m <- hbs_str_t223 |>
   mutate(coicop_digit = stringr::str_length(coicop)-3) |> 
@@ -114,14 +115,15 @@ coicop_colors <- tibble(
   color_pm = c("#d9524f", "#800020", "#F9B000", "#768299", "#998D76", "#16c2d5", "#466963", "#3c1361", "#663a82", "#b491c8", "#bebada", "#C0087F"))
 
 # Change in Prices: geo, coicop ---------
-
+safe_stl <- purrr::safely(stl)
 deseason <- function(data, start) {
   nas <- is.na(data)
   ts <- ts(data[!nas], start=c(lubridate::year(first(start)), lubridate::month(first(start))), deltat = 1/12)
-  dts <- stl(ts, 7)$time.series[, "seasonal"]
+  dts <- safe_stl(ts, 7)$time.series[, "seasonal"]
   res <- data
   res[nas] <- NA
-  res[!nas] <- dts
+  if(!is.null(dts$error))
+    res[!nas] <- dts$result
   return(res)
 }
 
@@ -170,6 +172,8 @@ inff <- furrr::future_map_dfr(1:(lubridate::interval(start,end)%/%months(1)), fu
       d = 1:dmax,
       i = purrr::map_dbl(dates, ~price_sa[time==.x]/price_sa[time==base]-1),
       i_nsa = purrr::map_dbl(dates, ~price_nsa[time==.x]/price_nsa[time==base]-1),
+      # remplacer cumsum par cumprod(1+i)^(1/d)-1
+      # ou les indices, hein?
       imd = cumsum(i)/d,
       imd_nsa = cumsum(i_nsa)/d,
       ref = base, 
@@ -276,6 +280,7 @@ outcome_sorted <-  outcome_g_q_c |>
          geo=factor(geo)) |> 
   select(-geo_name, -label) |> 
   ungroup() |> 
+  # du coup on vire les coicop non présent dans l'hicp comme CP042 et sans doute d'autres
   drop_na(outcome)
 
 inf_sorted <-  inflation_g_c |> 
