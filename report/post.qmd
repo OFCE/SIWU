@@ -1,0 +1,151 @@
+---
+title: "Inflation en Europe : les conséquences sociales de la guerre en Ukraine"
+lang: fr
+execute: 
+  keep-md: true
+format: 
+  html:
+    html-math-method: webtex
+  docx: 
+    fig-width: 7
+    fig-height: 7
+    fig-dpi: 600
+editor: visual
+---
+
+```{r, include=FALSE, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message=FALSE, 
+  warning=FALSE, 
+  fig.pos="htb", 
+  out.extra="",
+  dev="ragg_png",
+  out.width="100%",
+  fig.showtext=TRUE,
+  cache=FALSE)
+library(tidyverse)
+library(lubridate)
+library(glue)
+library(ggh4x)
+library(ofce)
+library(showtext)
+library(markdown)
+library(plotly)
+showtext_opts(dpi = 300)
+showtext_auto()
+objects <- load("data/quantile15.smallrdata")
+options(ofce.background_color = "#F9F4ED")
+options(ofce.base_family = "Arial")
+options(ofce.base_size = 12)
+
+```
+
+par [Guillaume Allègre](mailto:guillaume.allegre@sciencespo.fr), [François Geerolf](mailto:françois.geerolf@sciencespo.fr), [Xavier Timbeau](mailto:xavier.timbeau@sciencespo.fr)
+
+Quel est l'impact de la hausse des prix à la suite de la guerre en Ukraine sur le pouvoir d'achat des ménages au sein de l'Union Européenne ?
+C'est la question à laquelle nous tentons d'apporter quelques éléments de réponse sur ce site ([Social Impact of the War in Ukraine](https://ofce.shinyapps.io/siwu/), mis régulièrement à jour) ainsi que sur ce dépôt github ([SIWU](https://github.com/OFCE/SIWU)).
+La question est d'importance car elle touche à la cohésion dans l'Union Européenne à l'intérieur des pays membres et entre ceux-ci.
+
+```{r, fig.asp = 1}
+#| label: fig-quintile
+#| fig-scap: "Impact par quintile"
+#| fig-cap: "Hausse des consommations en valeur par la hausse des prix depuis février 2022 jusqu'à avril 2022 en % du revenu du quintile. L'impact est la somme de l'impact chaque mois divisé par la somme des revenus mensuels sur la même période. Les points plus petits sont pour une sélection de produits (huiles et matières grasses (CP0111), céréales (CP0115), combustibles pour le transport (CP0451, CP0452, CP0453, CP0454) et le chauffage (CP0722) - Source: Eurostat HICP et revenus par quintile"
+
+library(glue)
+library(scales)
+
+data <- data |>
+  mutate(
+      geo_f = fct_reorder(
+        countrycode::countrycode(data$geo, "iso2c", "un.name.fr"),
+        Q1),
+      pays = str_c(
+        "{geo_f}",
+        "20% les plus pauvres: perte de {label_percent(.1)(Q1_t)} dont {label_percent(.1)(Q1)} panier réduit",
+        "20% les plus riches: perte de {label_percent(.1)(Q5_t)} dont {label_percent(.1)(Q5)} panier réduit", 
+        "[panier réduit aux produits directement impactés (huiles, cérales, combustibles)]",
+        sep="\n") |> glue())
+
+(ggplot(
+  data |> 
+    mutate(
+      geo_f = fct_reorder(
+        countrycode::countrycode(data$geo, "iso2c", "un.name.fr"), Q1_t)) ,
+  aes(y=geo_f)) + 
+    geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="gray80", alpha=0.5, size=1.5)+
+    geom_segment(aes(y=geo_f,x=Q1_t, yend=geo_f, xend=Q5_t), col="gray80", alpha=0.5, size=3.5)+
+    geom_point(aes(x=Q1, label=pays), size=1.5, col="steelblue1", alpha=0.75) +
+    geom_point(aes(x=Q1_t, label=pays), size=3.5, col="steelblue1") +
+    geom_point(aes(x=Q5, label=pays), size=1.5, col="steelblue4", alpha=0.75) +
+    geom_point(aes(x=Q5_t, label=pays), size=3.5, col="steelblue4") +
+    geom_text(aes(x=Q1_t), label="Q1", size=6/.pt, col="white", fontface="bold" ) +
+    geom_text(aes(x=Q5_t), label="Q5", size=6/.pt, col="white", fontface="bold") +
+    scale_x_continuous(labels = scales::label_percent(1),
+                       breaks = scales::breaks_width(0.05))+
+    ylab(NULL) + xlab(NULL) +
+    theme_ofce(base_size = 12) +
+    theme(panel.grid.major.y = element_blank(),
+          panel.grid.major.x = element_line(colour="gray70", size=0.1),
+          axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.text.y = element_text(margin=margin(0,10,0,0,"pt")),
+          plot.caption = element_text(
+            size = rel(0.66),
+            color = "gray25",
+            face= "italic",
+            hjust = 0,
+            vjust = 0.5,
+            margin = margin(b=0, t=12),
+            lineheight=1.5))+
+    labs(title = NULL,
+         subtitle = NULL)) |>
+  ggplotly(tooltip = c("label")) |> 
+  layout(yaxis = list(fixedrange=TRUE),
+         xaxis = list(fixedrange=TRUE)) |> 
+  config(displayModeBar=FALSE) 
+```
+
+D'un point de vue méthodologique, nous identifions l'évolution du prix de certains groupes de produits depuis le début de la guerre en Ukraine (le 24 février 2022), en utilisant la nomenclature COICOP qui classifie les types de consommation des ménages (alimentation, chauffage résidentiel, transport...).
+Nous utilisons ensuite l'Enquête européenne sur les budgets des ménages (2015) pour identifier la structure de consommation des ménages par pays de l'Union et par quintile de revenus.
+Nous pouvons ainsi estimer l'impact de la hausse des prix en euros et en % du revenu sur chaque quintile de revenu pour chaque pays membre de l'Union Européenne et le décomposer par source en termes de produits concernés par une forte inflation.
+Le poids de chaque produit dans la baisse du pouvoir d'achat dépend ainsi de son poids dans le panier de consommation et de l'inflation qu'il a subie.
+Ces facteurs jouent de façon hétérogène selon les pays membres et le quintile de niveau de vie des ménages.
+
+L'impact de la hausse des prix sur le pouvoir d'achat peut être compensé au niveau national de plusieurs manières, ce qui peut avoir un impact différencié sur l'évolution des prix que nous mesurons (mais pas nécessairement sur le budget des ménages).
+Premièrement, un gouvernement peut décider de bloquer les prix de façon discrétionnaire (ou de freiner la hausse) : dans ce cas l'impact ne sera pas (ou moins) perçu au niveau des ménages.
+Des prix stables peuvent aussi provenir d'un marché régulé (par exemple un tarif réglementé) où les prix pour les ménages ne sont pas revalorisés par le gouvernement ou l'autorité de régulation.
+Dans ces cas, le coût budgétaire est porté par le gouvernement ou les entreprises de production ou de distribution publiques ou privées.
+Les entreprises privées porteront seules le coût de la hausse des prix si les consommateurs possèdent des contrats à prix fixes, pour autant qu'elles ne se soient pas elles-mêmes couvertes sur les marchés à terme.
+Aussi, ni l'Etat ni les ménages ne seront impactés si le pays ne consomme pas de gaz : c'est le cas notamment dans les petites iles dépourvues d'infrastructures de distribution de gaz (Chypre, Malte...).
+Enfin l'impact sera également nul ou moindre si les contrats d'importation ne sont pas ou peu indexés sur le cours du gaz (certains pays bénéficient de contrats indexés sur le pétrole, dont l'augmentation est moindre que pour le gaz).
+Deuxièmement, les gouvernements peuvent compenser les hausses de prix par des chèques inflation qui dépendent ou non (1) du niveau de revenu des ménages ; et/ou (2) de leurs besoins en énergie.
+Dans ce cas, l'inflation, telle que nous la mesurons reste élevée mais est compensée partiellement (ce que nous ne mesurons pas).
+Enfin, les prix peuvent être bloqués mais seulement pour les moins aisés (tarifs sociaux) et/ou les ménages ayant les plus forts besoins.
+Il faut donc garder à l'esprit que ces mesures gouvernementales de compensation ont un impact différencié sur ce que nous mesurons (l'impact de la hausse des prix) car nous ne mesurons que certaines politiques compensatrices (celles qui ont un impact sur les prix mesurés) et pas les autres, celles qui augmentent les revenus des ménages (notamment les transferts sous forme de chèque énergie ou chèque inflation).
+
+Nonobstant ces limites, quels sont nos résultats aujourd'hui ?
+Premièrement, l'Estonie, la Roumanie, la Grèce ou les Pays-Bas sont parmi les pays les plus touchés.
+Deuxièmement, dans quasiment tous les pays, les ménages du 1er quintile de revenus, les 20% les moins aisés, sont bien plus touchés, en % de leurs revenus, que ceux des 20% les plus aisés.
+L'écart d'impact entre les quintiles tend à être plus important dans les pays les plus touchés.
+Contre-exemple, parmi les pays les plus touchés, ceci est moins vrai en Roumanie où les moins aisés se déplacent moins par véhicule individuel.
+Cet exemple montre qu'il est difficile de dégager des généralités, chaque pays ayant ses spécificités.
+Si on croise ces deux résultats principaux, on obtient que les 20% des ménages les moins aisés ont perdu respectivement 6,9%, 5,2% et 4,4% de pouvoir d'achat à travers la hausse des prix depuis février 2022 en Estonie, en Grèce et aux Pays-Bas[^1] .
+A l'inverse, la perte est inférieure à 1% pour les 20% des ménages les plus aisés en Italie (0,3%) et en France (0,7%).
+
+[^1]: Les classements sont sensibles au point de référence : dans certains pays, l'inflation des prix de l'énergie est antérieure au début de la guerre mais peut être causée par son anticipation (sous la forme de la baisse des exportations russes).
+
+La hausse des prix dans les pays les plus touchés provient du gaz de l'électricité, du chauffage résidentiel et des carburants, impactés directement ou indirectement par les cours du gaz et du pétrole.
+Les Pays-Bas sont un cas exemplaire dans la mesure où [la moitié des foyers ont un contrat d'énergie à prix variable](https://www.acm.nl/en/publications/energy-monitor-2022-50-dutch-consumers-have-variable-rate-energy-contracts).
+De plus les Pays-Bas font partie des pays où les contrats de long-terme sont indexés sur les cours du gaz (et non plus le pétrole comme traditionnellement).
+Dans les pays du nord-ouest de l'Europe (Allemagne, Belgique, Danemark, France, Irlande, Luxembourg, Pays-Bas), 95% du gaz est acheté sur la base du cours du gaz (soit sur le prix spot, soit en contrat indexé sur le prix du gaz) et les 5% restants par des contrats de long terme indexés sur le pétrole ([spglobal](https://www.spglobal.com/commodityinsights/en/market-insights/latest-news/natural-gas/070220-gas-on-gas-pricing-increases-dominance-in-european-market-igu)).
+Ce chiffre baisse à 78% en moyenne européenne.
+Aux Pays-Bas, les consommateurs sont donc potentiellement confrontés directement à la volatilité du marché.
+L'idée originelle de vérité des prix des marchés risque d'être remplacée par celle de rançon ou d'extorsion : la consommation étant à court terme peu sensible au prix, une forte hausse des prix se traduit essentiellement par un transfert du consommateur vers le (pays) producteur.
+Les pays du G7 [discutent actuellement de mesures de blocage de prix de l'énergie afin de limiter ces effets](https://www.ft.com/content/ee090a48-5407-496f-b0e4-1fe78f37495d).
+
+Pour répondre à ce choc, le gouvernement néerlandais a été moins volontariste que d'autres gouvernements européens : d'après [l'institut Bruegel](https://www.bruegel.org/publications/datasets/national-policies-to-shield-consumers-from-rising-energy-prices/), il a alloué 0,7 point de Pib à des mesures compensatrices entre septembre 2021 et mai 2022 contre 1,4 en France et 3,7 en Grèce sur la même période.
+Ces mesures incluent une baisse de la TVA sur l'énergie de 21 à 9% (ayant un impact sur les prix que l'on mesure dans cette étude) et une 'allocation énergie' pour les plus pauvres (800 euros).
+
+Notre étude montre que les conséquences sociales de la Guerre en Ukraine diffèrent dans l'Union Européenne selon les choix politiques et économiques des pays membres entérinés avant ou depuis le début de la guerre : dépendance énergétique aux énergies fossiles, organisation du marché de l'énergie, compensations gouvernementales en termes de prix ou de transferts.
+La difficulté sera de rester unis dans la diversité, face une crise qui met en péril cohésions sociales nationales et européenne.

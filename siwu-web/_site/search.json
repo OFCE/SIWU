@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "SIWU aim to track the impacts of prices changes in Europe. Using data from Eurostat, we propose for each EU member state visualisations and tables"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Social Impact of the War in Ukraine",
+    "section": "",
+    "text": "Footnotes\n\n\nWe use a loess smoothing algorithm giving results close to X11/X13 procedures from the Census Bureau.↩︎\nOdyssee-Mure: https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/passenger-mobility-per-capita.html↩︎\nAccording to Swedish Environmental Agency, total greenhouse gas emission from buildings (heating) decreased from 9.30 million tonnes of carbon dioxide equivalents in 1990 to 0.9 in 2018 https://ec.europa.eu/energy/sites/ener/files/documents/se_2020_ltrs_official_translation.pdf↩︎"
+  }
+]

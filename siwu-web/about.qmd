@@ -1,0 +1,8 @@
+---
+title: "About"
+---
+
+SIWU aim to track the impacts of prices changes in Europe.
+Using data from Eurostat, we propose for each EU member state visualisations and tables
+
+
