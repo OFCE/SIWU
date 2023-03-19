@@ -351,7 +351,7 @@ data <- outcome_sorted |>
   ungroup() |> 
   mutate(geo = countrycode::countrycode(geo, "eurostat", "iso2c") |> tolower()) |> 
   ungroup() |> 
-  pivot_wider(id_col = c(geo_f, geo), names_from = sub, values_from = c(Q1,Q5)) |> 
+  pivot_wider(id_cols = c(geo_f, geo), names_from = sub, values_from = c(Q1,Q5)) |> 
   rename_with(~str_replace(str_remove(.x, "_TRUE"), "_FALSE", "_t")) |> 
   mutate(geo_f = fct_reorder(geo_f, Q1_t))
 # Aude Martin a.martin@alternatives-economiques.fr
@@ -566,3 +566,4 @@ save(data, file="data/quantile15.smallrdata")
 fs::dir_copy("svg", "siwu-web/svg", overwrite = TRUE)
 fs::dir_copy("svg", "report/svg", overwrite = TRUE)
 fs::file_copy("data/quantile15.smallrdata", "report/data/", overwrite=TRUE)
+
