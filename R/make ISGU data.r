@@ -120,9 +120,9 @@ deseason <- function(data, start) {
   nas <- is.na(data)
   ts <- ts(data[!nas], start=c(lubridate::year(first(start)), lubridate::month(first(start))), deltat = 1/12)
   dts <- safe_stl(ts, 7)
-  res <- data
+  res <- 0
   res[nas] <- NA
-  if(!is.null(dts$error)) {
+  if(is.null(dts$error)) {
     dts2 <- dts$result$time.series[, "seasonal"]
     if(length(dts2)>0)
       res[!nas] <- dts2

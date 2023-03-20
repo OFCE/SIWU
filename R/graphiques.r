@@ -385,7 +385,8 @@ quantiles1et5 <- ggplot(data , aes(y=geo_f)) +
          "Source: Eurostat HICP and income per quintile", sep="\n"))
 
 quantiles1et5.fr <- ggplot(
-  data |> mutate(geo_f = fct_reorder(countrycode::countrycode(data$geo, "iso2c", "un.name.fr"), Q1)),
+  data |> drop_na(Q1) |> mutate(geo_f = countrycode::countrycode(geo, "iso2c", "un.name.fr"),
+                                geo_f = fct_reorder(geo_f, Q1)),
   aes(y=geo_f)) + 
   geom_segment(aes(y=geo_f,x=Q1, yend=geo_f, xend=Q5), col="steelblue")+
   geom_point(aes(x=Q1), size=3.5, col="steelblue1") +
@@ -489,8 +490,8 @@ dmax_min <- dmax |>
 outcomeQ1Q5 <- outcome_sorted |>
   filter(d==dmax_o_min$dmax) |> 
   filter(ref %in% c(since_wiu, since_1y)) |>
-  mutate(ref = case_when(ref==since_wiu ~ "wiu",
-                         ref==since_1y ~ "1y")) |> 
+  mutate(ref = case_when(ref==since_1y ~ "1y",
+                         ref==since_wiu ~ "wiu")) |> 
   filter(quantile %in% c("Q1", "Q5")) |>
   pivot_wider(id_cols=c(geo, coicop), 
               names_from=c(quantile, ref),
@@ -499,14 +500,23 @@ outcomeQ1Q5 <- outcome_sorted |>
   rename(qs_Q1 = q_Q1_1y,
          qs_Q5 = q_Q5_1y) |> 
   select(-starts_with("q_"))
+
+if(since_1y==since_wiu) {
+  outcomeQ1Q5 <- outcomeQ1Q5 |> 
+    bind_cols(outcomeQ1Q5 |> 
+                select(ends_with("_1y")) |> 
+                rename_with(.fn = ~str_replace(.x, "_1y", "_wiu")))
+}
+
 table_index <- distinct(inf_sorted, geo) |> pull(geo) |> sort() |> ksplit(6)
+
 cts <- imap(table_index, ~{
   ## data ----------------------
   countries_table <- inf_sorted |>
     filter(d==dmax_min$dmax, ref %in% c(since_wiu, since_1y)) |> 
     filter(geo %in% .x) |> 
-    mutate(ref = case_when(ref==since_wiu ~ "wiu",
-                           ref==since_1y ~ "1y")) |> 
+    mutate(ref = case_when(ref==since_1y ~ "1y", 
+                           ref==since_wiu ~ "wiu")) |> 
     select(coicop, coicop_digit, i, d, ref, pm, geo_f, geo) |> 
     group_by(coicop, geo_f, coicop_digit) |> 
     filter((coicop_digit==3)|coicop_digit==0) |> 
@@ -516,16 +526,28 @@ cts <- imap(table_index, ~{
     pivot_wider(id_cols = c(coicop, geo_f, geo),
                 names_from=c(d,ref),
                 values_from = c(i, ipm, pm), 
-                names_glue = "{.value}_{ref}") |>  
-    rename(pm = pm_1y) |> select(-pm_wiu) |> 
+                names_glue = "{d}_{.value}_{ref}", 
+                names_repair = "unique") |>  
+    rename(pm = pm_1y) |> select(-any_of("pm_wiu")) 
+  
+  if(since_1y==since_wiu) {
+    countries_table <- countries_table |> 
+      bind_cols(countries_table |> 
+                  select(ends_with("_1y")) |> 
+                  rename_with(.fn = ~str_replace(.x, "_1y", "_wiu")))
+  }
+  
+  countries_table <- countries_table |> 
     left_join(all_coicop |> select(coicop=coicop3, l3), by="coicop") |> 
     mutate(l3 = if_else(is.na(l3), "Total", l3)) |> 
     left_join(outcomeQ1Q5, by=c("geo", "coicop")) |> 
     arrange(geo, -ipm_wiu) |>
     mutate(flag = localflag(geo),
            l3 = str_c(coicop, ": ", l3)) |> 
-    select(l3, geo_f,  i_1y, i_wiu, ipm_1y, ipm_wiu, o_Q1_wiu, o_Q5_wiu, pm, qs_Q1, qs_Q5) |> 
-    filter(ipm_wiu >= 0.002 | rank(-ipm_wiu)<=5) |> 
+    select(l3, geo_f,  i_1y, i_wiu, ipm_1y, ipm_wiu, o_Q1_wiu, o_Q5_wiu, pm, qs_Q1, qs_Q5) |>
+    group_by(geo_f) |> 
+    filter(rank(-ipm_wiu)<=5) |> 
+    ungroup() |> 
     mutate(
       l3 = str_remove(l3, "CP"),
       l3 = if_else(str_length(l3)>32, str_c(str_sub(l3, 1,29), "..."), l3)) |> 
