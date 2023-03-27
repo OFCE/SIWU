@@ -28,7 +28,7 @@ format:
     documentclass: scrartcl
     classoption: 
     - DIV=12
-    mainfont: Roboto
+    #mainfont: Roboto
     papersize: a4
     fontsize: 9pt
     fig-cap-location: top
