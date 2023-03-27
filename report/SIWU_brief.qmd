@@ -73,7 +73,8 @@ if (F){
 sysfonts::font_add_google('Nunito')
 showtext_opts(dpi = 600)
 showtext_auto()
-objects <- load("../data/sorties.rdata")
+# Does not exist anymore ?
+# objects <- load("../data/sorties.rdata")
 options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Roboto")
 options(ofce.base_size = 9)
