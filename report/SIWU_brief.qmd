@@ -71,7 +71,7 @@ if (F){
   devtools::install_github("ofce/ofce")
 }
 sysfonts::font_add_google('Nunito')
-showtext_opts(dpi = 600)
+showtext_opts(dpi = 150)
 showtext_auto()
 # Does not exist anymore ?
 # objects <- load("../data/sorties.rdata")
@@ -182,7 +182,7 @@ provided by gas.
 #| fig-cap: "Real price of a selection of commodities"
 # source("../R/make ISGU data.r") and source("../R/commodity prices.r") before running this chunk
 cocol <- qs::qread("../data/coicops.qs") |> pull(color, name = coicop)
-gcom <- qs::qread("../data/gcom.qs") 
+# gcom <- qs::qread("../data/gcom.qs") 
 load("../data/gcom.rdata")
 CMOr <- CMOr |> mutate(
   text = glue::glue(str_c(

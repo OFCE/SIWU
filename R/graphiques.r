@@ -524,9 +524,9 @@ cts <- imap(table_index, ~{
     select(-coicop_digit) |> 
     mutate(ipm = i * pm) |> 
     pivot_wider(id_cols = c(coicop, geo_f, geo),
-                names_from=c(d,ref),
+                names_from=c(ref),
                 values_from = c(i, ipm, pm), 
-                names_glue = "{d}_{.value}_{ref}", 
+                names_glue = "{.value}_{ref}", 
                 names_repair = "unique") |>  
     rename(pm = pm_1y) |> select(-any_of("pm_wiu")) 
   
