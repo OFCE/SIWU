@@ -12,12 +12,6 @@ source("R/graphiques.R")
  # penser à modifier readme.md et à renomer le pdf en fonction de la date
 # penser à modifier le texte aussi de temps en temps
 
-library("gfonts")
-download_font(
-  id = "roboto",
-  output_dir = "report/roboto",
-  variants = c("regular", "300italic", "700")
-)
 # 
 # génére le html
 quarto::quarto_render("report/SIWU_brief.qmd", output_format = "html")

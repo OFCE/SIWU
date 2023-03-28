@@ -119,19 +119,19 @@ channels.
     acting on prices. Exceptional checks, increases in allowances or income are note accounted for.
     Data provision on this matter by Eurostat in a standardized format would be very useful.
 
--   We don't take in account expected increase in future prices due to known indexation mechanisms.
+-   We don't take into account expected increase in future prices due to known indexation mechanisms.
     For instance, in some countries, rents are re-evaluated on an index which is calculated using
     prices of certain goods or services.
 
--   We don't take in account increases in wages or other components of income that could increase in
-    the future due to price increase. Some of those indexation are explicit in private contracts or
+-   We don't take into account increases in wages or other components of income that could increase in
+    the future due to price increase. Some of those indexations are explicit in private contracts or
     mandatory through general law, depending on the country and the source of income. Some increases
     are going to occur due to non explicit market mechanism and negotiations between economic
     agents. Here also, there is a clear lack of standardized information about country and source of
     income heterogeneity. Years of low inflation may be a explanation for this poor documentation of
     essential short term mechanism, but the surge of prices increases points the urgent need for a
     comprehensive collection of this information, in order to forecast future evolution of
-    purchasing power and redistributive effects caused by increases of prices, being a general
+    purchasing power and redistributive effects caused by increases in prices, being a general
     increase in price or located on a few products.
 
 ### Methodology
