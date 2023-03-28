@@ -89,9 +89,9 @@ last_update_data <- eurostat::get_eurostat_toc() %>%
 
 The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
 cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the
-economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution
-of Europeans' purchasing power in the short run. We use the latest data given to us by eurostat, last
-updated on `r format(last_update_data, '%d %B, %Y')`.
+economic and social impacts of the war in Ukraine (SIWU). To that end, we shall focus on the evolution
+of Europeans' purchasing power in the short run. We use the latest data on inflation compiled by Eurostat,
+last updated on `r format(last_update_data, '%d %B, %Y')`.
 
 ### Main channels
 
@@ -115,16 +115,20 @@ However, subsidies or price regulations can prevent the price hikes cascades.
 Due to lack of data or clear estimation of mechanisms, we don't take in account 3 important
 channels.
 
--   The first one is the response of government to compensate price increases when not directly
-    acting on prices. Exceptional checks, increases in allowances or income are note accounted for.
-    Data provision on this matter by Eurostat in a standardized format would be very useful.
+-   The first one is government interventions to compensate price increases when not directly
+    acting on prices. In particular, exceptional checks, increases in allowances or income are not being accounted
+    for. Data provision on this matter, for example by Eurostat, in a standardized format, would be very useful.
 
--   We don't take into account expected increase in future prices due to known indexation mechanisms.
-    For instance, in some countries, rents are re-evaluated on an index which is calculated using
-    prices of certain goods or services.
+-   We don't take into account expected increases in future prices due to automatic indexation mechanisms.
+    For instance, in some countries, rents are re-evaluated on an index which is calculated using the
+    prices of certain goods or services. Other goods and services can also be indexed on inflation, such as 
+    tolls on highways. Once again, systematic data collection effects could be undertaken,
+    for example by the European Central Bank, because automatic indexations of goods and services are very
+    important for understanding inflation developments, and they can potentially be very heterogeneous across 
+    countries.
 
 -   We don't take into account increases in wages or other components of income that could increase in
-    the future due to price increase. Some of those indexations are explicit in private contracts or
+    the future due to price increases. Some of those indexations are explicit in private contracts or
     mandatory through general law, depending on the country and the source of income. Some increases
     are going to occur due to non explicit market mechanism and negotiations between economic
     agents. Here also, there is a clear lack of standardized information about country and source of
