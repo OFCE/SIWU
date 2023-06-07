@@ -1,9 +1,9 @@
 ---
 title: "Social Impact of the War in Ukraine"
 author: "François Geerolf, Xavier Timbeau, Guillaume Allègre"
-date: '2022-11-17'
+date: "2022-11-17"
 abstract: |
-    *Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/siwu>. Updated with HICP release 17/11/2022, prices indexes for all products up to october 2022. Next update on 16/12/2022*
+    *Using data on HICP per COICOP and quintile, we calculate for EU member states the impact on income of households of price evolution since the invasion of Ukraine by Russia. Most of the loss in income is due to energy price increases. In some countries, food prices are also an important factor. Code and data used in the note are available at <http://github.com/ofce/siwu>. Updated with the latest HICP release given by Eurostat, on `r Sys.Date()`.*
 format:
   html: 
     toc: true
@@ -28,7 +28,7 @@ format:
     documentclass: scrartcl
     classoption: 
     - DIV=12
-    mainfont: Roboto
+    #mainfont: Roboto
     papersize: a4
     fontsize: 9pt
     fig-cap-location: top
@@ -78,25 +78,31 @@ showtext_auto()
 options(ofce.background_color = "#F9F4ED")
 options(ofce.base_family = "Roboto")
 options(ofce.base_size = 9)
+
+last_update_data <- eurostat::get_eurostat_toc() %>%
+  filter(code == "prc_hicp_manr") %>%
+  pull(4) %>%
+  as.Date(format = "%d.%m.%Y")
 ```
 
 ## Social Impact of War in Ukraine
 
 The invasion of Ukraine by Russia on February 24, 2022 opens a new world that calls for great
 cohesion in Europe. The response operates over multiple dimensions, and we propose to analyse the
-economic and social consequences of the war in Ukraine. To that end, we shall focus on the evolution
-of Europeans' purchasing power in the short run.
+economic and social impacts of the war in Ukraine (SIWU). To that end, we shall focus on the evolution
+of Europeans' purchasing power in the short run. We use the latest data on inflation compiled by Eurostat,
+last updated on `r format(last_update_data, '%d %B, %Y')`.
 
 ### Main channels
 
 The main channel that we identify, concerning the social impact of the war in Ukraine, is the rise
 in the prices of consumer goods or services linked to actual or anticipated interruptions in the
 delivery of certain products imported from Russia or Ukraine. These products are mainly crude oil,
-gas, certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. There
-are generally substitutes (of origin or nature) for these products, but the rigidity of supply
+gas, certain cereals or oil seeds, nitrogen fertilizers and other products used in industry. Often, there
+are substitutes (of origin or nature) for these products, but the rigidity of supply
 chains and/or production capacities have led to a rise in prices since (and before) the war started.
 The partial exclusion of Russia from the Western financial system and the prospect of an embargo
-extending to gas supplies amplifies the price movements. Evidently, an embargo would amplify it
+extending to gas supplies has led to an amplification of price movements. Evidently, an embargo would amplify it
 further, with large impacts on prices, and probably also volumes (via quotas).
 
 These price hikes are cascaded down to end consumers in the European Union. The price of gasoline at
@@ -109,23 +115,27 @@ However, subsidies or price regulations can prevent the price hikes cascades.
 Due to lack of data or clear estimation of mechanisms, we don't take in account 3 important
 channels.
 
--   The first one is the response of government to compensate price increases when not directly
-    acting on prices. Exceptional checks, increases in allowances or income are note accounted for.
-    Data provision on this matter by Eurostat in a standardized format would be very useful.
+-   The first one is government interventions to compensate price increases when not directly
+    acting on prices. In particular, exceptional checks, increases in allowances or income are not being accounted
+    for. Data provision on this matter, for example by Eurostat, in a standardized format, would be very useful.
 
--   We don't take in account expected increase in future prices due to known indexation mechanisms.
-    For instance, in some countries, rents are re-evaluated on an index which is calculated using
-    prices of certain goods or services.
+-   We don't take into account expected increases in future prices due to automatic indexation mechanisms.
+    For instance, in some countries, rents are re-evaluated on an index which is calculated using the
+    prices of certain goods or services. Other goods and services can also be indexed on inflation, such as 
+    tolls on highways. Once again, systematic data collection effects could be undertaken,
+    for example by the European Central Bank, because automatic indexations of goods and services are very
+    important for understanding inflation developments, and they can potentially be very heterogeneous across 
+    countries.
 
--   We don't take in account increases in wages or other components of income that could increase in
-    the future due to price increase. Some of those indexation are explicit in private contracts or
+-   We don't take into account increases in wages or other components of income that could increase in
+    the future due to price increases. Some of those indexations are explicit in private contracts or
     mandatory through general law, depending on the country and the source of income. Some increases
     are going to occur due to non explicit market mechanism and negotiations between economic
     agents. Here also, there is a clear lack of standardized information about country and source of
     income heterogeneity. Years of low inflation may be a explanation for this poor documentation of
     essential short term mechanism, but the surge of prices increases points the urgent need for a
     comprehensive collection of this information, in order to forecast future evolution of
-    purchasing power and redistributive effects caused by increases of prices, being a general
+    purchasing power and redistributive effects caused by increases in prices, being a general
     increase in price or located on a few products.
 
 ### Methodology
