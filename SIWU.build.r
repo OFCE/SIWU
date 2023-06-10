@@ -9,8 +9,9 @@ source("R/commodity prices.R")
 # avec les données constituées fait les graphiques et les tableaux
 source("R/graphiques.R")
 
-# penser à modifier readme.md et à renomer le pdf en fonction de la date
+ # penser à modifier readme.md et à renomer le pdf en fonction de la date
 # penser à modifier le texte aussi de temps en temps
+
 # 
 # génére le html
 quarto::quarto_render("report/SIWU_brief.qmd", output_format = "html")
