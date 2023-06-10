@@ -101,7 +101,7 @@ selected <-
     "Copper", "fer",
     "Crude oil, Brent", "nrg",
     "Gold", "fer",
-    "Natural gas, Europe ", "nrg",
+    "Natural gas, Europe", "nrg",
     "Wheat, US HRW", "food",
     "Phosphate rock", "fer",
     "Zinc", "fer",
@@ -217,6 +217,6 @@ graph2svg(gcom)
 graph2png(gcom, width = 16, height = 23, dpi=600)
 save(gcom, CMOr, CMOd, cocol, ld_str, file="data/gcom.rdata")
 gcom2000 <- gcom %+% scale_x_date(limits = c(ymd("2000-01-01"), NA), guide="axis_minor", date_minor_breaks = "1 year", date_labels = "%Y")
-graph2svg(gcom2000, ratio = 16/9, width = 16)
+graph2png(gcom2000, ratio = 16/9, width = 16)
 graph2png(gcom2000, width = 16, height = 23, dpi=600)
 
